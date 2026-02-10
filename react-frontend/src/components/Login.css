@@ -1,121 +1,129 @@
 /* ===== Page Background ===== */
 .login-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background-image: url("/login.png"); /* ✅ IMPORTANT */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Poppins', sans-serif;
 }
 
+
 /* ===== Login Card ===== */
 .login-card {
+  position: fixed; /* Change from relative to fixed */
+  top: 36.2%;        /* Vertically center */
+  left: 56.6%;       /* Horizontally center */
+  transform: translate(-50%, -50%); /* Perfect center alignment */
+
+  width: 730px;
+  min-height: 412px;
   background: #fff;
-  width: 360px;
-  padding: 2.5rem 2rem;
-  border-radius: 16px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  border-radius: 18px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
   animation: fadeIn 0.6s ease;
+  overflow: hidden;
+
+  /* layout */
+  display: grid;
+  grid-template-columns: 55% 45%;
+}
+
+/* ===== LEFT FORM AREA ===== */
+.login-card > * {
+  grid-column: 1 / 2;
+  position: relative;
+  z-index: 2;
 }
 
 .login-card h2 {
-  text-align: center;
-  margin-bottom: 2rem;
+  text-align: left;
+  margin-bottom: rem;
   color: #333;
   font-weight: 600;
+}
+
+/* Padding only for left side */
+.login-card {
+  padding-left: 3.8rem;
+  padding-top: 3rem;
+  padding-bottom: .5rem;
+}
+
+/* ===== PURPLE PANEL ===== */
+.login-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 45%;
+  height: 100%;
+  background: #6c3bff;
+
+  /* smooth curved separation */
+  border-top-left-radius: 120px;
+  border-bottom-left-radius: 120px;
+
+  z-index: 1;
 }
 
 /* ===== Input Fields ===== */
 .input-group {
   position: relative;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.4rem;
 }
 
 .input-group input {
-  width: 100%;
-  padding: 12px 10px;
+  width: 90%;
+  padding: 12px;
   font-size: 14px;
-  border: 1px solid #ccc;
+  border: none;
+  background: #f0f0f0;
   border-radius: 8px;
   outline: none;
 }
 
 .input-group input:focus {
-  border-color: #667eea;
+  background: #e9e9ff;
 }
 
+/* hide floating labels (image has placeholders) */
 .input-group label {
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  color: #999;
-  font-size: 13px;
-  pointer-events: none;
-  transform: translateY(-50%);
-  transition: 0.3s;
-  background: #fff;
-  padding: 0 6px;
+  display: none;
 }
 
-/* Floating Label */
-.input-group input:focus + label,
-.input-group input:not(:placeholder-shown) + label {
-  top: -7px;
-  font-size: 11px;
-  color: #667eea;
-}
-
-/* ===== Button ===== */
+/* ===== Buttons ===== */
 .primary-btn {
-  width: 100%;
-  padding: 12px;
+  width: 90%;
+  padding: 02px;
   border: none;
-  border-radius: 10px;
-  background: #667eea;
-  color: #fff;
+  border-radius: 8px;
+  background: #6c3bff;
+  color: #000000;
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
-  transition: 0.3s;
+  margin-top: 10px;
 }
 
 .primary-btn:hover {
-  background: #5a67d8;
-  transform: translateY(-1px);
+  background: #5a2ee6;
+}
+
+.secondary-btn {
+  display: none;
 }
 
 /* ===== Message ===== */
 .message {
-  text-align: center;
   margin-top: 1rem;
   font-size: 13px;
   color: #444;
+  width: 90%;
 }
 
 /* ===== Animation ===== */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.secondary-btn {
-  width: 100%;
-  padding: 0.9rem;
-  margin-top: 10px;
-  background: #e0e0e0;
-  border: none;
-  border-radius: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.secondary-btn:hover {
-  background: #d5d5d5;
-  transform: translateY(-2px);
-}

@@ -160,29 +160,31 @@ const server = http.createServer((req, res) => {
 
     // ================= LOGIN =================
     else if (req.method === 'POST' && req.url === '/login') {
-      const { email, password } = JSON.parse(body);
+  let { email, password } = JSON.parse(body);
 
-      const sql = `
-        SELECT * FROM customers
-        WHERE email = ? AND password = ? AND is_verified = TRUE
-      `;
+  email = email.toLowerCase().trim();
 
-      db.query(sql, [email, password], (err, result) => {
-        if (err) {
-          res.writeHead(500);
-          res.end('Server error');
-          return;
-        }
+  const sql = `
+    SELECT * FROM customers
+    WHERE email = ? AND password = ? AND is_verified = 1
+  `;
 
-        if (result.length === 0) {
-          res.writeHead(401);
-          res.end('Invalid email or password');
-        } else {
-          res.writeHead(200);
-          res.end('Login successful');
-        }
-      });
+  db.query(sql, [email, password], (err, result) => {
+    if (err) {
+      res.writeHead(500);
+      res.end('Server error');
+      return;
     }
+
+    if (result.length === 0) {
+      res.writeHead(401);
+      res.end('Invalid email or password');
+    } else {
+      res.writeHead(200);
+      res.end('Login successful');
+    }
+  });
+}
 
     // ================= NOT FOUND =================
     else {

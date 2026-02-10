@@ -45,11 +45,16 @@ function Home() {
             commissions—just direct connections that support your local
             community.
           </p>
-
           <div className="buttons">
-            <button className="explore-btn">Explore Businesses →</button>
-            <button className="vendor-btn">Register as Vendor</button>
-          </div>
+          <button className="explore-btn">Explore Businesses →</button>
+          <button
+            className="vendor-btn"
+            onClick={() => navigate("/vendor/signup")}
+            >
+     Register as Vendor
+  </button>
+</div>
+
         </div>
 
         <div className="hero-image">
