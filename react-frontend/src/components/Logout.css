@@ -1,0 +1,40 @@
+.logout-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(120deg,#4b6cb7,#182848);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.logout-box {
+  background: white;
+  padding: 40px 60px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.logout-box h2 {
+  margin-top: 15px;
+  color: #182848;
+}
+
+.logout-box p {
+  color: gray;
+}
+
+/* Spinner */
+.spinner {
+  width: 45px;
+  height: 45px;
+  border: 5px solid #eee;
+  border-top: 5px solid #4b6cb7;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
