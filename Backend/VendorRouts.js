@@ -164,4 +164,79 @@ router.patch('/update-stock/:id', async (req, res) => {
   }
 });
 
+
+router.get('/profile/:vendor_id', async (req, res) => {
+  const { vendor_id } = req.params;
+
+  try {
+    const [vendors] = await db.execute(
+      'SELECT vendor_id, shop_name, owner_name, email, phone, shop_logo, created_at FROM vendors WHERE vendor_id = ?',
+      [vendor_id]
+    );
+
+    if (vendors.length === 0) {
+      return res.json({ success: false, error: 'Vendor not found' });
+    }
+
+    res.json({ success: true, vendor: vendors[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+router.put('/update-profile/:vendor_id', async (req, res) => {
+  const { vendor_id } = req.params;
+  const { shop_name, owner_name, phone, shop_logo } = req.body;
+
+  try {
+    await db.execute(
+      `UPDATE vendors 
+       SET shop_name=?, owner_name=?, phone=?, shop_logo=? 
+       WHERE vendor_id=?`,
+      [shop_name, owner_name, phone, shop_logo, vendor_id]
+    );
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+
+router.put('/change-password/:vendor_id', async (req, res) => {
+  const { vendor_id } = req.params;
+  const { currentPassword, newPassword } = req.body;
+
+  try {
+    const [vendors] = await db.execute(
+      'SELECT password FROM vendors WHERE vendor_id = ?',
+      [vendor_id]
+    );
+
+    if (vendors.length === 0) {
+      return res.json({ success: false, error: 'Vendor not found' });
+    }
+
+    const match = await bcrypt.compare(currentPassword, vendors[0].password);
+
+    if (!match) {
+      return res.json({ success: false, error: 'Current password incorrect' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await db.execute(
+      'UPDATE vendors SET password=? WHERE vendor_id=?',
+      [hashedPassword, vendor_id]
+    );
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
 module.exports = router;
