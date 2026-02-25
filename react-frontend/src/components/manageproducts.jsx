@@ -82,69 +82,83 @@ function ManageProducts() {
   };
 
   return (
-    <div className="manage-product-page">
-      <h2>Manage Products</h2>
-      {products.length === 0 ? (
-        <p>No products found.</p>
-      ) : (
-        <table className="product-table">
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Stock</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((p) => (
-              <tr key={p.product_id}>
-                <td>
-                  {p.image ? (
-                    <img
-                      src={p.image}
-                      alt={p.name}
-                      style={{ width: "60px", height: "60px", objectFit: "cover" }}
-                    />
-                  ) : (
-                    "No Image"
-                  )}
-                </td>
-                <td>{p.product_id}</td>
-                <td>{p.name}</td>
-                <td>{p.category}</td>
-                <td>₹{p.price}</td>
-                <td>{p.stock}</td>
-                <td>{p.stock > 0 ? "In Stock" : "Out of Stock"}</td>
-                <td style={{ position: "relative" }}>
-                  <button
-                    className="actions-btn"
-                    onClick={() =>
-                      setActiveMenu(activeMenu === p.product_id ? null : p.product_id)
-                    }
-                  >
-                    Actions ▼
-                  </button>
+  <div className="manage-page">
+    <h2 className="manage-title">Manage Products</h2>
 
-                  {activeMenu === p.product_id && (
-                    <div className="dropdown-menu">
-                      <button onClick={() => editProduct(p)}>Edit Product</button>
-                      <button onClick={() => updateStock(p.product_id)}>Update Stock</button>
-                      <button onClick={() => deleteProduct(p.product_id)}>Delete Product</button>
-                    </div>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
-  );
+    {products.length === 0 ? (
+      <p>No products found.</p>
+    ) : (
+      <table className="products-table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {products.map((p) => (
+            <tr key={p.product_id}>
+              <td>
+                {p.image ? (
+                  <img src={p.image} alt={p.name} />
+                ) : (
+                  "No Image"
+                )}
+              </td>
+
+              <td>{p.product_id}</td>
+              <td>{p.name}</td>
+              <td>{p.category}</td>
+              <td>₹{p.price}</td>
+              <td>{p.stock}</td>
+
+              <td>
+                {p.stock > 0 ? "In Stock" : "Out of Stock"}
+              </td>
+
+              {/* ACTIONS */}
+              <td className="actions-wrapper">
+                <button
+                  className="actions-btn"
+                  onClick={() =>
+                    setActiveMenu(
+                      activeMenu === p.product_id ? null : p.product_id
+                    )
+                  }
+                >
+                  Actions ▼
+                </button>
+
+                {activeMenu === p.product_id && (
+                  <div className="dropdown-menu">
+                    <button onClick={() => editProduct(p)}>Edit Product</button>
+                    <button onClick={() => updateStock(p.product_id)}>
+                      Update Stock
+                    </button>
+                    <button
+                      className="delete"
+                      onClick={() => deleteProduct(p.product_id)}
+                    >
+                      Delete Product
+                    </button>
+                  </div>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+  </div>
+);
+
 }
 
 export default ManageProducts;

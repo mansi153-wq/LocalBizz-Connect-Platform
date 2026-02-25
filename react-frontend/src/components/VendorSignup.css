@@ -1,37 +1,122 @@
-.signup-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+/* PAGE */
+.auth-layout{
+  min-height:100vh;
+  display:flex;
+  background:#a1e2d7;
+  font-family:Arial, sans-serif;
 }
 
-.signup-card {
-  width: 400px;
-  padding: 20px;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+/* LEFT IMAGE SIDE */
+.text-side{
+  flex:1;
+  min-height:150vh; /* allows scroll */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
 }
 
-.signup-card input,
-.signup-card textarea {
-  width: 100%;
-  margin: 8px 0;
-  padding: 10px;
+/* illustration */
+.side-image{
+  width:85%;
+  max-width:650px;
+  position:relative;
+  z-index:2;
 }
 
-.primary-btn {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
+/* white oval shadow */
+.text-side::after{
+  content:"";
+  position:absolute;
+  width:520px;
+  height:200px;
+  background:#ffffff;
+  bottom:80px;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius:50%;
+  z-index:1;
 }
 
-.secondary-btn {
-  width: 100%;
-  margin-top: 5px;
+/* RIGHT PHONE SIDE */
+.phone-side{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:130vh;
 }
 
-.error {
-  color: red;
-  font-size: 14px;
+/* PHONE FRAME */
+.phone-frame{
+  width:300px;
+  height:600px;
+  background:#ffffff;
+  border-radius:40px;
+  padding:10px 20px;
+  box-shadow:
+    0 0 0 14px #111,
+    0 30px 50px rgba(0,0,0,0.35);
+  position:relative;
+}
+
+/* notch */
+.phone-frame::before{
+  content:"";
+  position:relative;
+  width:140px;
+  height:24px;
+  background:#111;
+  top:14px;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius:20px;
+}
+
+/* FORM CARD */
+.signup-card{
+  background:#ffffff;
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 15px 30px rgba(0,0,0,0.12);
+  margin-top:40px;
+}
+
+/* inputs */
+.signup-card input{
+  width:100%;
+  padding:12px;
+  margin:7px 0;
+  border-radius:10px;
+  border:none;
+  background:#ffffff;
+}
+
+/* buttons */
+.primary-btn{
+  width:100%;
+  padding:13px;
+  margin-top:12px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(45deg,#7b3ff2,#5a2fe0);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.secondary-btn{
+  width:100%;
+  margin-top:8px;
+  background:none;
+  border:none;
+  color:#666;
+  cursor:pointer;
+}
+
+.error{
+  color:red;
+  font-size:14px;
+  text-align:center;
 }

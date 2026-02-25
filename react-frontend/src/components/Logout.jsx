@@ -14,7 +14,7 @@ function Logout() {
     // wait 1.5 sec then redirect
     setTimeout(() => {
       navigate("/", { replace: true });
-    }, 4500);
+    }, 1500);
   }, [navigate]);
 
   return (

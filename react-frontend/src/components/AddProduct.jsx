@@ -63,7 +63,7 @@ function AddProduct() {
 
     // ✅ FIX 2: send numbers not strings
     const productData = {
-      vendor_id: localStorage.getItem("vendor_id") || 1,
+      vendor_id: localStorage.getItem("vendor_id"),
       name: formData.name,
       category: formData.category,
       price: Number(formData.price),

@@ -43,14 +43,13 @@ function VendorDashboard() {
             </button>
           ))}
           <button
-            className="logout"
-            onClick={() => {
-              localStorage.clear();
-              navigate("/");
-            }}
-          >
-            Logout
-          </button>
+  className="logout"
+  onClick={() => navigate("/logout")}
+>
+  Logout
+</button>
+
+
         </nav>
       </aside>
 

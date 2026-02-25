@@ -46,7 +46,15 @@ function Home() {
             community.
           </p>
           <div className="buttons">
-          <button className="explore-btn">Explore Businesses →</button>
+         
+          
+           <button
+            className="explore-btn"
+            onClick={() => navigate("/vendor/login")}
+            >
+     Login as Vendor
+  </button>
+          
           <button
             className="vendor-btn"
             onClick={() => navigate("/vendor/signup")}
