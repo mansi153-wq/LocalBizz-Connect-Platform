@@ -17,8 +17,10 @@ function Home() {
 
         <ul className="nav-links">
           <li>Home</li>
-          <li>Explore Businesses</li>
-          <li>Become a Vendor</li>
+         <li onClick={() => navigate("/explore")} style={{ cursor: "pointer" }}>
+            Explore Businesses
+        </li>
+         
           <li>About Us</li>
           <li>Contact</li>
           <li className="login" onClick={() => navigate('/login')}>

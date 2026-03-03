@@ -1,0 +1,87 @@
+.vendor-orders-container {
+  min-height: 100vh;
+  padding: 60px 20px;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #a8edea, #cdb4db);
+  display: flex;
+  justify-content: center;
+}
+
+/* Wrapper to prevent full width stretch */
+.orders-table-wrapper {
+  width: 100%;
+  max-width: 1100px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Table */
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+/* Header */
+.orders-table thead {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.orders-table th {
+  padding: 14px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  color: #333;
+}
+
+/* Rows */
+.orders-table td {
+  padding: 14px 12px;
+  font-size: 14px;
+  color: #444;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Zebra effect (soft) */
+.orders-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Hover */
+.orders-table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.orders-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.01);
+}
+
+/* Status pill (optional if you use status column) */
+.status {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status.pending {
+  background: rgba(255, 193, 7, 0.3);
+}
+
+.status.completed {
+  background: rgba(40, 167, 69, 0.3);
+}
+
+.status.cancelled {
+  background: rgba(220, 53, 69, 0.3);
+}

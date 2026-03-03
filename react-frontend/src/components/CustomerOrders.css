@@ -1,0 +1,84 @@
+/* Background */
+.orders-container {
+  min-height: 100vh;
+  padding: 40px;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #a8edea, #cdb4db);
+}
+
+/* Title */
+.orders-title {
+  text-align: center;
+  font-size: 28px;
+  color: white;
+  margin-bottom: 30px;
+}
+
+/* ✅ GRID CONTAINER */
+.orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Card */
+.order-card {
+  padding: 18px;
+  border-radius: 15px;
+  background: white;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transition: 0.3s ease;
+  font-size: 14px;
+}
+
+.order-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Details */
+.order-details p {
+  margin: 4px 0;
+  font-size: 13px;
+}
+
+/* Products */
+.products-list {
+  margin-top: 8px;
+  padding-left: 15px;
+  font-size: 12px;
+}
+
+/* Status */
+.status {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.confirmed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.shipped {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status.delivered {
+  background: #c3e6cb;
+  color: #155724;
+}
+
+.status.cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}

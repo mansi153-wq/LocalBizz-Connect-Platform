@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
+
 function Login() {
   const navigate = useNavigate();
 
@@ -10,16 +11,32 @@ function Login() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
  
-  const login = async () => {
+
+const login = async () => {
+  try {
     const res = await fetch('http://localhost:3000/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     });
 
-    const text = await res.text();
-    setMessage(text);
-  };
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      localStorage.setItem("customer_id", data.customer_id);
+      localStorage.setItem("customer_name", data.name);
+     navigate("/customer/dashboard");
+    } else {
+      setMessage(data.message || "Login failed");
+    }
+
+  } catch (error) {
+    console.error("Login error:", error);
+    setMessage("Server error");
+  }
+};
+
+
 
   return (
     <div className="login-page">
@@ -52,10 +69,7 @@ function Login() {
           Login
         </button>
 
-        <button className="secondary-btn" onClick={() => navigate('/')}>
-          Go Back
-        </button>
-
+      
         <p className="message">{message}</p>
       </div>
     </div>

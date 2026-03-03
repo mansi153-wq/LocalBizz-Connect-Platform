@@ -1,0 +1,150 @@
+.dashboard-container {
+  padding: 40px;
+  font-family: Arial, sans-serif;
+  background-color: #f5f6fa;
+  min-height: 100vh;
+}
+
+.welcome-card {
+  background: #4e73df;
+  color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.welcome-card h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.welcome-card p {
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+.stats-grid {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.stat-box {
+  background: #fff;
+  flex: 1;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.stat-box h3 {
+  margin: 0;
+  font-size: 24px;
+  color: #4e73df;
+}
+
+.stat-box p {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.button-group {
+  margin-top: 40px;
+  display: flex;
+  gap: 15px;
+}
+
+.button-group button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #4e73df;
+  color: #fff;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.button-group button:hover {
+  background-color: #2e59d9;
+}
+
+.logout-btn {
+  background-color: #e74a3b;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Carousel */
+.carousel-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.carousel-btn {
+  background: #4e73df;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.3s;
+}
+
+.carousel-btn:hover {
+  background: #2e59d9;
+}
+
+.featured-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+}
+
+.featured-carousel::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.featured-card {
+  flex: 0 0 220px;
+  background: #fff;
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.featured-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.featured-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.featured-card h4 {
+  margin: 10px 0 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.featured-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}

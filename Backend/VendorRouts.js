@@ -46,6 +46,24 @@ router.post('/register', async (req, res) => {
   }
 });
 
+
+
+/* ---------------------- GET ALL ACTIVE PRODUCTS (FOR CUSTOMERS) ---------------------- */
+router.get('/products', async (req, res) => {
+  try {
+    const [products] = await db.execute(
+      "SELECT * FROM products WHERE status = 'Active'"
+    );
+
+    res.json({ success: true, products });
+  } catch (err) {
+    console.error('GET ALL PRODUCTS ERROR:', err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+
+
 /* ---------------------- VENDOR LOGIN ---------------------- */
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -238,5 +256,174 @@ router.put('/change-password/:vendor_id', async (req, res) => {
     res.status(500).json({ success: false, error: 'Server error' });
   }
 });
+
+router.get('/products', async (req, res) => {
+  try {
+    const [products] = await db.execute(`
+      SELECT p.*, v.shop_name
+      FROM products p
+      JOIN vendors v ON p.vendor_id = v.vendor_id
+      WHERE p.status = 'Active'
+      AND v.status = 'Active'
+      ORDER BY p.created_at DESC
+    `);
+
+    res.json({ success: true, products });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false });
+  }
+});
+
+
+
+
+/* ---------------------- CREATE ORDER (CUSTOMER → VENDOR) ---------------------- */
+router.post('/orders', async (req, res) => {
+  const { customer_id, vendor_id, items } = req.body;
+
+  try {
+    if (!customer_id || !vendor_id || !items || items.length === 0) {
+      return res.status(400).json({ success: false, message: 'Invalid order data' });
+    }
+
+    let total_amount = 0;
+
+    // 🔥 CHECK STOCK FOR EACH ITEM
+    for (let item of items) {
+
+      const [products] = await db.execute(
+        "SELECT stock, price FROM products WHERE product_id = ? AND status = 'Active'",
+        [item.product_id]
+      );
+
+      if (products.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: "Product not found or inactive"
+        });
+      }
+
+      const product = products[0];
+
+      // ❌ STOCK VALIDATION
+      if (item.quantity > product.stock) {
+        return res.status(400).json({
+          success: false,
+          message: `Only ${product.stock} items available in stock`
+        });
+      }
+
+      // ✅ Always use DB price (security)
+      total_amount += item.quantity * product.price;
+    }
+
+    // ✅ Create Order
+    const [orderResult] = await db.execute(
+      `INSERT INTO orders (customer_id, vendor_id, total_amount, order_status)
+       VALUES (?, ?, ?, 'Pending')`,
+      [customer_id, vendor_id, total_amount]
+    );
+
+    const order_id = orderResult.insertId;
+
+    // ✅ Insert order items + reduce stock
+    for (let item of items) {
+
+      const [products] = await db.execute(
+        "SELECT stock, price FROM products WHERE product_id = ?",
+        [item.product_id]
+      );
+
+      const product = products[0];
+
+      await db.execute(
+        `INSERT INTO order_items (order_id, product_id, quantity, price)
+         VALUES (?, ?, ?, ?)`,
+        [order_id, item.product_id, item.quantity, product.price]
+      );
+
+      // 🔥 REDUCE STOCK
+      await db.execute(
+        "UPDATE products SET stock = stock - ? WHERE product_id = ?",
+        [item.quantity, item.product_id]
+      );
+    }
+
+    res.json({
+      success: true,
+      message: "Order placed successfully",
+      order_id
+    });
+
+  } catch (err) {
+    console.error("CREATE ORDER ERROR:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+/* ---------------------- GET ORDERS FOR VENDOR ---------------------- */
+router.get('/orders/:vendor_id', async (req, res) => {
+  const { vendor_id } = req.params; // route param now
+
+  try {
+    if (!vendor_id) {
+      return res.json({ success: false, error: 'Vendor ID required' });
+    }
+
+    const [orders] = await db.execute(`
+      SELECT o.order_id, o.total_amount, o.order_status, o.order_date, c.name AS customer_name
+      FROM orders o
+      JOIN customers c ON o.customer_id = c.id
+      WHERE o.vendor_id = ?
+      ORDER BY o.order_date DESC
+    `, [vendor_id]);
+
+    res.json({ success: true, orders });
+  } catch (err) {
+    console.error('FETCH VENDOR ORDERS ERROR:', err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+router.put("/update-order-status", async (req, res) => {
+  try {
+    const { order_id, status } = req.body;
+    if (!order_id || !status) return res.status(400).json({ success: false, message: "Missing order_id or status" });
+
+    const allowedStatuses = ["Pending","Confirmed","Shipped","Delivered","Cancelled"];
+    if (!allowedStatuses.includes(status)) return res.status(400).json({ success: false, message: "Invalid status value" });
+
+    // 1️⃣ Update order status
+    await db.execute("UPDATE orders SET order_status = ? WHERE order_id = ?", [status, order_id]);
+
+    // 2️⃣ If accepted, fetch full order info to send to customer
+    if (status === "Accepted") {
+      const [orderDetails] = await db.execute(`
+        SELECT o.order_id, o.total_amount, c.name AS customer_name, c.mobile AS customer_mobile,
+               v.shop_name, v.phone AS vendor_phone, v.address AS vendor_address,
+               p.name AS product_name, oi.quantity, oi.price
+        FROM orders o
+        JOIN customers c ON o.customer_id = c.id
+        JOIN vendors v ON o.vendor_id = v.vendor_id
+        JOIN order_items oi ON o.order_id = oi.order_id
+        JOIN products p ON oi.product_id = p.product_id
+        WHERE o.order_id = ?
+      `, [order_id]);
+
+      return res.json({
+        success: true,
+        message: "Order accepted",
+        orderDetails
+      });
+    }
+
+    res.json({ success: true, message: "Order status updated" });
+  } catch (err) {
+    console.log("Server route error:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
 
 module.exports = router;
