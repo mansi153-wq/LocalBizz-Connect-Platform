@@ -1,7 +1,7 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Signup.css';
+import signupImage from "../assets/signup.jpg";
 
 function Signup() {
   const navigate = useNavigate();
@@ -58,6 +58,7 @@ function Signup() {
 
   // ===== Signup =====
   const signup = async () => {
+
     const newErrors = {
       name: validateName(name),
       email: validateEmail(email),
@@ -66,93 +67,156 @@ function Signup() {
     };
 
     setErrors(newErrors);
+
     if (Object.values(newErrors).some(e => e)) return;
 
-    const res = await fetch('http://localhost:3000/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, password, mobile })
-    });
+    try {
+      const res = await fetch('http://localhost:3000/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, mobile })
+      });
 
-    const text = await res.text();
-    setMessage(text);
-    if (res.status === 200) setShowOtp(true);
+      const data = await res.json();
+      setMessage(data.message);
+
+      if (res.status === 200) {
+        setShowOtp(true); // ✅ Only show OTP here
+      }
+
+    } catch (err) {
+      setMessage("Server error. Please try again.");
+    }
   };
 
   // ===== OTP =====
   const verifyOtp = async () => {
+
     if (!/^[0-9]{4,6}$/.test(otp)) {
       setMessage('OTP must be 4–6 digits');
       return;
     }
 
-    const res = await fetch('http://localhost:3000/verify-otp', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, otp })
-    });
+    try {
+      const res = await fetch('http://localhost:3000/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp })
+      });
 
-    const text = await res.text();
-    setMessage(text);
+      const data = await res.json();
+      setMessage(data.message);
+
+      // ✅ SUCCESS FLOW HERE
+      if (res.ok) {
+        alert("Customer Successfully Registered!");
+        navigate("/customer/dashboard");
+      }
+
+    } catch (err) {
+      setMessage("OTP verification failed");
+    }
   };
 
   return (
     <div className="signup-page">
-      <div className="signup-card">
-        <h2>Customer Signup</h2>
+    <div className="signup-container">
 
-        <div className="input-group">
-          <input type="text" value={name} onChange={handleName} placeholder="Enter your Name" />
-          <label>Name</label>
-          {errors.name && <small className="error">{errors.name}</small>}
-        </div>
+  {/* LEFT SIDE */}
 
-        <div className="input-group">
-          <input type="email" value={email} onChange={handleEmail} placeholder=" Enter your Email ID" />
-          <label>Email</label>
-          {errors.email && <small className="error">{errors.email}</small>}
-        </div>
+    <div className="signup-text">
+      <h1>Customer Signup</h1>
+      <p>
+        Welcome to your new favorite place 💫  <br></br>
+Find what you need, when you need it,  
+all in just a few clicks.
+        Join us today ✨ <br />
+        Discover amazing services, book easily, and enjoy a seamless experience.
+      </p>
+    </div>
 
-        <div className="input-group">
-          <input type="password" value={password} onChange={handlePassword} placeholder="Enter valid password " />
-          <label>Password</label>
-          {errors.password && <small className="error">{errors.password}</small>}
-        </div>
+  
 
-        <div className="input-group">
-          <input type="text" value={mobile} onChange={handleMobile} maxLength="10" placeholder="Enter Mobile number " />
-          <label>Mobile</label>
-          {errors.mobile && <small className="error">{errors.mobile}</small>}
-        </div>
+  {/* RIGHT SIDE */}
+  <div className="signup-card">
+    <h2>Customer Signup</h2>
 
-        <button className="primary-btn" onClick={signup}>
-          Signup
-        </button>
-
-        <button className="secondary-btn" onClick={() => navigate('/')}>
-          Back to Homepage
-        </button>
-
-        {showOtp && (
-          <div className="otp-section">
+          <div className="input-group">
             <input
               type="text"
-              value={otp}
-              onChange={e => setOtp(e.target.value.replace(/\D/g, ''))}
-              maxLength="6"
-              placeholder="Enter OTP"
+              value={name}
+              onChange={handleName}
+              placeholder="Enter your Name"
             />
-            <button className="primary-btn" onClick={verifyOtp}>
-              Verify OTP
-            </button>
+            {errors.name && <small className="error">{errors.name}</small>}
           </div>
-        )}
 
-        <p className="message">{message}</p>
+          <div className="input-group">
+            <input
+              type="email"
+              value={email}
+              onChange={handleEmail}
+              placeholder="Enter your Email ID"
+            />
+            {errors.email && <small className="error">{errors.email}</small>}
+          </div>
+
+          <div className="input-group">
+            <input
+              type="password"
+              value={password}
+              onChange={handlePassword}
+              placeholder="Enter valid password"
+            />
+            {errors.password && <small className="error">{errors.password}</small>}
+          </div>
+
+          <div className="input-group">
+            <input
+              type="text"
+              value={mobile}
+              onChange={handleMobile}
+              maxLength="10"
+              placeholder="Enter Mobile number"
+            />
+            {errors.mobile && <small className="error">{errors.mobile}</small>}
+          </div>
+
+          <button className="primary-btn2" onClick={signup}>
+            Click here to sent OTP         </button>
+
+          <button
+            className="secondary-bt"
+            onClick={() => navigate('/login')}
+          >
+            Back to Login
+          </button>
+
+          {showOtp && (
+            <div className="otp-section">
+              <input
+                type="text"
+                value={otp}
+                onChange={e => setOtp(e.target.value.replace(/\D/g, ''))}
+                maxLength="6"
+                placeholder="Enter OTP"
+              />
+
+              <button
+                className="primary-btn"
+                onClick={verifyOtp}
+              >
+                Verify OTP
+              </button>
+            </div>
+          )}
+
+          <p className="message">{message}</p>
+
+        </div>
       </div>
     </div>
   );
 }
 
 export default Signup;
-

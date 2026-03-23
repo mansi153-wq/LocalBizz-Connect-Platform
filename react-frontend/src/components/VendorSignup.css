@@ -4,6 +4,7 @@
   display:flex;
   background:#a1e2d7;
   font-family:Arial, sans-serif;
+  margin-top:40px;
 }
 
 /* LEFT IMAGE SIDE */
@@ -31,7 +32,7 @@
   position:absolute;
   width:520px;
   height:200px;
-  background:#ffffff;
+  background:#085e5a;
   bottom:80px;
   left:50%;
   transform:translateX(-50%);
@@ -45,7 +46,7 @@
   display:flex;
   justify-content:center;
   align-items:center;
-  height:130vh;
+  height:140vh;
 }
 
 /* PHONE FRAME */
@@ -75,18 +76,19 @@
 }
 
 /* FORM CARD */
-.signup-card{
-  background:#ffffff;
+.signup-cards{
+  margin-left:5px;
   padding:25px;
+  width:100%;
+    height:70%;
   border-radius:25px;
-  box-shadow:0 15px 30px rgba(0,0,0,0.12);
   margin-top:40px;
 }
 
 /* inputs */
-.signup-card input{
+.signup-cards input{
   width:100%;
-  padding:12px;
+  padding:13px;
   margin:7px 0;
   border-radius:10px;
   border:none;
@@ -94,24 +96,26 @@
 }
 
 /* buttons */
-.primary-btn{
-  width:100%;
+.primary-btns{
+  width:102%;
   padding:13px;
   margin-top:12px;
   border:none;
   border-radius:12px;
-  background:linear-gradient(45deg,#7b3ff2,#5a2fe0);
+  background:linear-gradient(45deg,#0b1120,#5892f5);
   color:white;
   font-weight:bold;
   cursor:pointer;
 }
 
-.secondary-btn{
+.secondary-btns{
   width:100%;
+  height: 40px;
   margin-top:8px;
-  background:none;
+  background-color: #085e5a;
+  border-radius:12px;
   border:none;
-  color:#666;
+  color:#ffffff;
   cursor:pointer;
 }
 
@@ -119,4 +123,28 @@
   color:red;
   font-size:14px;
   text-align:center;
+}
+/* TEXT CONTENT */
+.text-content {
+  position: absolute;
+  top: 40px;
+  left: 135px;
+  z-index: 3;
+  color: #0b1120;
+  max-width: 500px;
+}
+
+/* Heading */
+.text-content h1 {
+  font-size: 49px;
+  font-weight: 750;
+  margin-bottom: 15px;
+  color: #083d3a;
+}
+
+/* Paragraph */
+.text-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #1f2937;
 }

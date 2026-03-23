@@ -1,40 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import logo from "../assets/logo.png";
-import sideImage from "../assets/image.png";
 
 function Home() {
   const navigate = useNavigate();
 
+  // ✅ Check if any user is logged in
+  const user = JSON.parse(localStorage.getItem("user"));
+  const vendorId = localStorage.getItem("vendor_id");
+  const adminId = localStorage.getItem("admin_id");
+
+  const isPublicUser = !user && !vendorId && !adminId;
+
   return (
     <>
-      {/* ===== NAVBAR ===== */}
-      <nav className="navbar">
-        <div className="logo">
-          <img src={logo} alt="LocalBiz Connect" />
-          <span>LocalBiz Connect</span>
-        </div>
-
-        <ul className="nav-links">
-          <li>Home</li>
-         <li onClick={() => navigate("/explore")} style={{ cursor: "pointer" }}>
-            Explore Businesses
-        </li>
-         
-          <li>About Us</li>
-          <li>Contact</li>
-          <li className="login" onClick={() => navigate('/login')}>
-            Login
-          </li>
-          <li>
-            <button onClick={() => navigate('/signup')} className="register-btn">
-              Register
-            </button>
-          </li>
-        </ul>
-      </nav>
-
-      {/* ===== HERO SECTION ===== */}
       <section className="hero">
         <div className="hero-text">
           <h1>
@@ -47,28 +26,24 @@ function Home() {
             commissions—just direct connections that support your local
             community.
           </p>
-          <div className="buttons">
-         
-          
-           <button
-            className="explore-btn"
-            onClick={() => navigate("/vendor/login")}
-            >
-     Login as Vendor
-  </button>
-          
-          <button
-            className="vendor-btn"
-            onClick={() => navigate("/vendor/signup")}
-            >
-     Register as Vendor
-  </button>
-</div>
 
-        </div>
+          {isPublicUser && (
+            <div className="buttons">
+              <button
+                className="explore-btn"
+                onClick={() => navigate("/vendor/login")}
+              >
+                Login as Vendor
+              </button>
 
-        <div className="hero-image">
-          <img src={sideImage} alt="Business" />
+              <button
+                className="vendor-btn"
+                onClick={() => navigate("/vendor/signup")}
+              >
+                Register as Vendor
+              </button>
+            </div>
+          )}
         </div>
       </section>
     </>

@@ -1,14 +1,24 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./VendorSignup.css";
+import "./VendorLogin.css";
+import logImage from "./login.png";
 
 function VendorLogin() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ email: "", password: "" });
+
+  const [form, setForm] = useState({
+    email: "",
+    password: ""
+  });
+
   const [error, setError] = useState("");
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,24 +31,29 @@ function VendorLogin() {
     try {
       const res = await fetch("http://localhost:5000/vendor/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(form)
       });
 
       const data = await res.json();
 
-      if (data.success) {
-        // ⭐ VERY IMPORTANT — clear old vendor session first
-        localStorage.clear();
+     if (data.success) {
 
-        // store new logged in vendor
-        localStorage.setItem("vendor_id", data.vendor_id);
-        localStorage.setItem("shopName", data.shopName);
+  // store vendor session
+ // ✅ store only vendor info, keep others safe
+localStorage.setItem("vendor_id", data.vendor_id);
+localStorage.setItem("shopName", data.shopName);
 
-        navigate("/vendor/dashboard");
-      } else {
+alert("Login Successful!");
+navigate("/vendor/dashboard", { replace: true });
+
+}
+ else {
         setError(data.error || "Login failed");
       }
+
     } catch (err) {
       console.error(err);
       setError("Server error");
@@ -46,36 +61,61 @@ function VendorLogin() {
   };
 
   return (
-    <div className="signup-page">
-      <div className="signup-card">
-        <h2>Vendor Login</h2>
-        {error && <p className="error">{error}</p>}
+    <div className="vendor-login-page">
 
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          onChange={handleChange}
-        />
+      <div className="vendor-login-container">
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
+        {/* LEFT IMAGE */}
+      <div className="vendor-login-image">
 
-        <button className="primary-btn" onClick={handleLogin}>
-          Login
-        </button>
+  <div className="login-text">
+    <h1>Vendor Login</h1>
+    <p>
+      Welcome back 👋 <br />
+      Manage your shop, track orders, and grow your business effortlessly.
+    </p>
+  </div>
 
-        <button
-          className="secondary-btn"
-          onClick={() => navigate("/vendor/signup")}
-        >
-          Create Account
-        </button>
+  <img src={logImage} alt="Login visual" />
+
+</div>
+
+        {/* RIGHT FORM */}
+        <div className="vendor-login-card">
+
+          <h2>Vendor Login</h2>
+
+          {error && <p className="vendor-login-error">{error}</p>}
+
+          <input
+            name="email"
+            type="email"
+            placeholder="Enter Email"
+            onChange={handleChange}
+          />
+
+          <input
+            name="password"
+            type="password"
+            placeholder="Enter Password"
+            onChange={handleChange}
+          />
+
+          <button className="vendor-login-primary-btn" onClick={handleLogin}>
+            Login
+          </button>
+
+          <button
+            className="vendor-login-secondary-btn"
+            onClick={() => navigate("/vendor/signup")}
+          >
+            Create Account
+          </button>
+
+        </div>
+
       </div>
+
     </div>
   );
 }

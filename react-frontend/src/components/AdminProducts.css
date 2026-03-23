@@ -1,0 +1,114 @@
+/* ================================
+   ADMIN PRODUCTS PAGE
+================================ */
+
+.admin-products-container{
+
+  /* adjust this if navbar overlaps */
+  margin-top: 60px;
+
+  padding: 30px;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(120deg,#eef2f7,#f9fbff);
+  min-height: 100vh;
+}
+
+
+/* ================================
+   PAGE TITLE
+================================ */
+
+.admin-products-container h2{
+  text-align:center;
+  margin-bottom:30px;
+  font-size:28px;
+  color:#333;
+}
+
+
+/* ================================
+   TABLE
+================================ */
+
+.admin-products-container table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 6px 15px rgba(0,0,0,0.08);
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.admin-products-container th{
+  background:linear-gradient(#0d1628,#4b6cb7);
+  color:white;
+  padding:14px;
+  text-align:center;
+  font-size:15px;
+}
+
+
+/* ================================
+   TABLE CELLS
+================================ */
+
+.admin-products-container td{
+  padding:12px;
+  text-align:center;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+  color:#444;
+}
+
+
+/* ================================
+   ROW HOVER
+================================ */
+
+.admin-products-container tr:hover{
+  background:#f6f9fc;
+}
+
+
+/* ================================
+   BUTTONS
+================================ */
+
+.admin-products-container button{
+  padding:6px 12px;
+  margin:3px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:13px;
+  transition:0.2s;
+}
+
+
+/* Enable Button */
+
+.admin-products-container button:first-child{
+  background:#3498db;
+  color:white;
+}
+
+.admin-products-container button:first-child:hover{
+  background:#2980b9;
+}
+
+
+/* Delete Button */
+
+.admin-products-container button:last-child{
+  background:#e74c3c;
+  color:white;
+}
+
+.admin-products-container button:last-child:hover{
+  background:#c0392b;
+}

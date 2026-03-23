@@ -1,7 +1,7 @@
 /* Page background */
 .add-product-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f4f6f8, #eef2ff);
+background: linear-gradient(120deg, #eef2f7, #f9fbff);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,11 +12,11 @@
 .add-product-card {
   background: #ffffff;
   width: 100%;
-  max-width: 600px;
+  max-width:850px;
   padding: 32px;
   border-radius: 18px;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
-  animation: fadeInUp 0.6s ease;
+ animation: slideFromRight 0.3s ease;
 }
 
 /* Title */
@@ -136,13 +136,13 @@ form {
 }
 
 /* Animation */
-@keyframes fadeInUp {
+@keyframes slideFromRight {
   from {
     opacity: 0;
-    transform: translateY(25px);
+    transform: translateX(80px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }

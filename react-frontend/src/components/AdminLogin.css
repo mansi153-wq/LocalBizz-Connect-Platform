@@ -1,0 +1,106 @@
+/* PAGE */
+.admin-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  gap: 1px;
+  padding: 130px;
+  flex-wrap: wrap;
+  background: url(C:\Users\USER\OneDrive\Desktop\new\react-frontend\src\components\admin.avif) no-repeat center center/cover;
+  background-size: 100%;      /* zoom in */
+
+}
+
+/* IMAGE */
+
+
+/* CARD */
+.admin-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ margin-left:-500px;
+  border: 1.2px solid #e5e7eb;
+ border-color:#000000;
+ background: linear-gradient(#212020,#7c7d80) !important;
+ 
+}
+
+
+
+/* TITLE */
+.admin-card h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 600;
+
+  color: #fefefe;
+}
+
+/* SUBTITLE */
+.subtitle {
+  font-size: 14px;
+  color: #f6eaea !important;
+  margin-bottom: 20px;
+}
+
+/* FORM */
+.admin-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* INPUT */
+.admin-form input {
+  padding: 14px;
+  border-radius: 10px;
+
+  border: 1px solid #0d0d0d;
+  font-size: 14px;
+
+  background: #3d4042;
+
+  transition: all 0.25s ease;
+}
+
+.admin-form input:focus {
+  outline: none;
+  border-color: #0e0e0e;
+  background: rgb(168, 166, 166);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+}
+
+/* BUTTON */
+.admin-form button {
+  padding: 14px;
+  border-radius: 10px;
+
+  border: none;
+
+ background: linear-gradient(#0d1628,#4b6cb7);
+
+  color: rgb(255, 254, 254);
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.admin-form button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(99,102,241,0.35);
+}
+
+.admin-form button:active {
+  transform: scale(0.98);
+}

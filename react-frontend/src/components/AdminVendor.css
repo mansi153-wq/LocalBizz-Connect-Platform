@@ -1,0 +1,87 @@
+/* AdminVendors.css */
+
+.admin-vendors-container {
+  padding: 40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f6fa;
+  min-height: 100vh;
+  margin-top: 40px;
+}
+
+.admin-vendors-container h2 {
+    color: linear-gradient(#0d1628,#4b6cb7);
+  margin-bottom: 25px;
+  font-size: 28px;
+}
+
+.vendor-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.vendor-table th,
+.vendor-table td {
+  padding: 15px 20px;
+  text-align: left;
+  font-size: 16px;
+  color: #333;
+}
+
+.vendor-table th {
+ background: linear-gradient(#0d1628,#4b6cb7);
+  color: #fff;
+  font-weight: 600;
+}
+
+.vendor-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.vendor-table tr:hover {
+  background: #e8f0fe;
+}
+
+.vendor-table button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.vendor-table button:hover {
+  opacity: 0.9;
+}
+
+.vendor-table button:active {
+  transform: scale(0.98);
+}
+
+.vendor-table button.block {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.vendor-table button.activate {
+  background: #2ecc71;
+  color: #fff;
+}
+
+/* Responsive for small screens */
+@media (max-width: 768px) {
+  .vendor-table th,
+  .vendor-table td {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .vendor-table button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}

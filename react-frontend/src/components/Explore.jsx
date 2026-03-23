@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 import "./Explore.css";
 
 function Explore() {
@@ -46,11 +48,14 @@ if (quantity > product.stock) {
 }
 
 
-    const customer_id = localStorage.getItem("customer_id");
-    if (!customer_id) {
-      alert("Please login first");
-      return;
-    }
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user || !user.id) {
+  alert("Please login first");
+  return;
+}
+
+const customer_id = user.id;
 
     const orderData = {
       customer_id: Number(customer_id),
@@ -87,6 +92,7 @@ if (quantity > product.stock) {
   return (
     <div className="explore-container">
       <h2>Explore Products</h2>
+      
 
       {/* 🔍 Search + Filter Section */}
       <div className="filter-bar">

@@ -130,9 +130,14 @@ function AccountSettings() {
             onChange={handleProfileChange}
             placeholder="Owner Name"
           />
+          <input
+            name="Email"
+            value={vendor.email}
+            onChange={handleProfileChange}
+            placeholder="Email"
+          />
 
-          <input name="email" value={vendor.email} disabled />
-
+    
           <input
             name="phone"
             value={vendor.phone}

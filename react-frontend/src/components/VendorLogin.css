@@ -1,60 +1,121 @@
-/* Full page center */
-.signup-page {
-  height: 100vh;
+/* Full page */
+.vendor-login-page {
+
+  height: 150vh;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f5f5f5;
+  background:#7de0f45e;
   font-family: Arial, sans-serif;
 }
 
-/* Card */
-.signup-card {
-  width: 320px;
+/* TEXT OVER IMAGE */
+.login-text{
+  position: absolute;
+  top: 90px;
+  left: 40px;
+  z-index: 2;
+
+}
+
+/* Heading */
+.login-text h1{
+  font-size: 59px;
+  font-weight: 900;
+    max-width: 480px;
+  margin-bottom: 10px;
+  background:  #232637;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Paragraph */
+.login-text p{
+  font-size: 19px;
+  line-height: 1.9;
+  color: #29283d;
+    max-width: 380px;
+}
+/* MAIN CONTAINER */
+.vendor-login-container{
+
+  width: 750px;
+  height: 450px;
   background: white;
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 18px;
+  display: flex;
+  overflow: hidden;
+  margin-top:-150px;
+  margin-left:390px;
+}
+
+/* LEFT SIDE IMAGE AREA */
+.vendor-login-image{
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vendor-login-image img{
+  width: 100%;
+  border-radius: 50px;
+}
+
+/* RIGHT SIDE FORM */
+.vendor-login-card{
+  width: 50%;
+  padding: 40px;
+  
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  
 }
 
 /* Title */
-.signup-card h2 {
+.vendor-login-card h2{
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 /* Inputs */
-.signup-card input,
-.signup-card textarea {
-  margin: 6px 0;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.vendor-login-card input,
+.vendor-login-card textarea{
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 19px;
+ border: 1px solid #ccc;
 }
 
 /* Buttons */
-.primary-btn {
-  margin-top: 10px;
+.vendor-login-primary-btn{
+  margin-top: 12px;
   padding: 10px;
-  background: #2d89ff;
+  background: #e2cf72;
   color: white;
-  border: none;
-  border-radius: 5px;
+ border: none; 
+  border-radius: 6px;
   cursor: pointer;
 }
 
-.secondary-btn {
+.vendor-login-primary-btn:hover{
+  background: #ffd503;
+}
+
+.vendor-login-secondary-btn{
   margin-top: 8px;
   padding: 10px;
-  background: #ddd;
+  background: #3f5780;
+  color:white;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-.error {
+/* Error */
+.vendor-login-error{
   color: red;
   text-align: center;
   font-size: 14px;

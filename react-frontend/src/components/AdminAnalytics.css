@@ -1,0 +1,61 @@
+/* =========================
+   PAGE CONTAINER
+========================= */
+
+.analytics-container{
+  min-height:100vh;
+  padding:60px 20px;
+  background:linear-gradient(120deg,#eef2f7,#f9fbff);
+  font-family:"Segoe UI",sans-serif;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.analytics-title{
+  font-size:32px;
+  margin-top:40px;
+  color:#333;
+  font-weight:600;
+}
+
+
+/* =========================
+   CHART CARD
+========================= */
+
+.chart-card{
+  width:700px;
+  background:white;
+  padding:30px;
+  border-radius:12px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.08);
+  transition:transform 0.3s ease;
+}
+
+
+/* hover effect */
+
+.chart-card:hover{
+  transform:translateY(-5px);
+}
+
+
+/* responsive */
+
+@media(max-width:768px){
+
+.chart-card{
+  width:95%;
+}
+
+.analytics-title{
+  font-size:24px;
+}
+
+}

@@ -6,6 +6,7 @@
   min-height: 100vh;
   background: linear-gradient(120deg, #eef2f7, #f9fbff);
   font-family: "Segoe UI", sans-serif;
+   
 }
 
 /* Page title */
@@ -121,4 +122,14 @@
 
 .vendor-logo img:hover {
   transform: scale(1.1);
+}
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

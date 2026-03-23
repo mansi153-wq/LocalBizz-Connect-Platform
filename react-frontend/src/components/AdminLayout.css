@@ -1,0 +1,45 @@
+.admin-container{
+  display:flex;
+  height:100vh;
+ margin-top: -50px;
+}
+
+.admin-sidebar{
+  width:220px;
+  background: linear-gradient(#0d1628,#4b6cb7);
+  color:white;
+  padding:70px;
+  display:flex;
+  flex-direction:column;
+  gap:45px;
+}
+
+.admin-sidebar a{
+  color:white;
+  text-decoration:none;
+}
+
+.admin-sidebar a:hover{
+  color:#38bdf8;
+}
+
+.admin-sidebar button{
+  margin-top:auto;
+  padding:8px;
+  background:rgb(31, 39, 74);
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+
+.admin-content{
+  flex:1;
+  padding:20px;
+  background:#f1f5f9;
+  
+  /* ❌ REMOVE THIS */
+  /* margin-top: -90px; */
+
+  /* ❌ REMOVE THIS */
+  /* padding-left: 50px; */
+}

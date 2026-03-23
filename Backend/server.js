@@ -123,15 +123,59 @@ const server = http.createServer((req, res) => {
 
           const user = result[0];
 
-          res.writeHead(200);
-          res.end(JSON.stringify({
-            success: true,
-            customer_id: user.id,
-            name: user.name
-          }));
+     res.writeHead(200);
+res.end(JSON.stringify({
+  success: true,
+  id: user.id,
+  name: user.name,
+  email: user.email,
+  mobile: user.mobile
+}));
         }
       });
     }
+
+    else if (req.method === 'POST' && req.url === '/change-password') {
+  const { id, oldPassword, newPassword } = JSON.parse(body);
+
+  const checkSql = `SELECT * FROM customers WHERE id = ? AND password = ?`;
+
+  db.query(checkSql, [id, oldPassword], (err, result) => {
+
+    if (result.length === 0) {
+      res.writeHead(400);
+      return res.end(JSON.stringify({ success: false, message: "Wrong old password" }));
+    }
+
+    const updateSql = `UPDATE customers SET password = ? WHERE id = ?`;
+
+    db.query(updateSql, [newPassword, id], () => {
+      res.writeHead(200);
+      res.end(JSON.stringify({ success: true, message: "Password updated" }));
+    });
+  });
+}
+
+    else if (req.method === 'POST' && req.url === '/update-profile') {
+  const { id, name, email, mobile } = JSON.parse(body);
+
+  const sql = `
+    UPDATE customers
+    SET name = ?, email = ?, mobile = ?
+    WHERE id = ?
+  `;
+
+  db.query(sql, [name, email, mobile, id], (err) => {
+    if (err) {
+      res.writeHead(500);
+      return res.end(JSON.stringify({ success: false, message: "Update failed" }));
+    }
+
+    res.writeHead(200);
+    res.end(JSON.stringify({ success: true, message: "Profile updated" }));
+  });
+}
+
 
         // ================= GET CUSTOMER ORDERS =================
   else if (req.method === 'GET' && req.url.startsWith('/customer/orders/')) {

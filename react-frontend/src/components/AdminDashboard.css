@@ -1,0 +1,40 @@
+.admin-dashboard{
+  padding:40px;
+  font-family:Arial;
+  margin-top:70px;
+}
+
+.admin-stats{
+  display:flex;
+  gap:20px;
+  margin-top:30px;
+}
+
+.admin-cards{
+  background:white;
+  padding:25px;
+  flex:1;
+  border-radius:10px;
+  text-align:center;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.admin-cards h3{
+  font-size:28px;
+  color:#4e73df;
+}
+
+.admin-cards p{
+  margin-top:5px;
+  color:#555;
+}
+
+.admin-logout{
+  margin-top:40px;
+  padding:10px 20px;
+  border:none;
+  background:#e74c3c;
+  color:white;
+  border-radius:6px;
+  cursor:pointer;
+}

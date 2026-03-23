@@ -11,6 +11,7 @@ function VendorSignup() {
     ownerName: "",
     email: "",
     mobile: "",
+    address: "",
     password: "",
     confirmPassword: "",
     shopLogo: null,
@@ -36,6 +37,13 @@ function VendorSignup() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    // Email validation for specific domains
+const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|net|edu|gov|mil|int|in)$/;
+
+    if (!emailPattern.test(form.email)) {
+      setError("Enter Valid Email ");
+      return;
+    }
 
     if (form.password !== form.confirmPassword) {
       setError("Passwords do not match");
@@ -47,6 +55,44 @@ function VendorSignup() {
       logoBase64 = await convertToBase64(form.shopLogo);
     }
 
+    // Shop name validation
+if (form.shopName.trim() === "") {
+  setError("Shop name is required");
+  return;
+}
+
+// Owner name validation (letters only)
+const namePattern = /^[A-Za-z ]+$/;
+if (!namePattern.test(form.ownerName)) {
+  setError("Owner name must contain only letters");
+  return;
+}
+
+// Mobile number validation
+const mobilePattern = /^[0-9]{10}$/;
+if (!mobilePattern.test(form.mobile)) {
+  setError("Mobile number must be exactly 10 digits");
+  return;
+}
+
+// Password validation
+const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+if (!passwordPattern.test(form.password)) {
+  setError(
+    "Password must be at least 8 characters long and combination of numbers and alphabets and special characters "
+  );
+  return;
+}
+
+// Confirm password check
+if (form.password !== form.confirmPassword) {
+  setError("Passwords do not match");
+  return;
+}
+
+
+
     try {
       const res = await fetch("http://localhost:5000/vendor/register", {
         method: "POST",
@@ -55,6 +101,7 @@ function VendorSignup() {
           shopName: form.shopName,
           ownerName: form.ownerName,
           email: form.email,
+          address: form.address,
           password: form.password,
           mobile: form.mobile,
           shop_logo: logoBase64,
@@ -65,7 +112,7 @@ function VendorSignup() {
 
       if (data.success) {
         alert("Vendor registered successfully!");
-        navigate("/vendor/dashboard");
+        navigate("/vendor/login");
       } else {
         setError(data.error || "Something went wrong");
       }
@@ -79,34 +126,39 @@ function VendorSignup() {
 
       {/* LEFT IMAGE SIDE */}
       <div className="text-side">
-        <img src={vendorimage} alt="vendor" className="side-image" />
-      </div>
+  <div className="text-content">
+    <h1>Vendor Registration </h1>
+    <p>
+      Grow your business with us 🚀 <br />
+      Reach more customers, manage your shop easily, and boost your sales.
+    </p>
+  </div>
 
+  <img src={vendorimage} alt="vendor" className="side-image" />
+</div>
       {/* RIGHT PHONE SIDE */}
       <div className="phone-side">
         <div className="phone-frame">
-          <div className="signup-card">
+          <div className="signup-cards">
            
             {error && <p className="error">{error}</p>}
-             <div className="form-group">
-              <label>Shop Logo</label>
-              <input type="file" name="shopLogo" accept="image/*" onChange={handleChange}/>
-            </div>
+            
             <input name="shopName" placeholder="Shop / Business Name" onChange={handleChange}/>
             <input name="ownerName" placeholder="Owner Name" onChange={handleChange}/>
             <input name="email" type="email" placeholder="Email" onChange={handleChange}/>
+             <input name="address" placeholder="Address" onChange={handleChange}/>
             <input name="mobile" placeholder="Mobile Number" maxLength="10" onChange={handleChange}/>
             <input name="password" type="password" placeholder="Password" onChange={handleChange}/>
             <input name="confirmPassword" type="password" placeholder="Confirm Password" onChange={handleChange}/>
 
            
 
-            <button className="primary-btn" onClick={handleSignup}>
+            <button className="primary-btns" onClick={handleSignup}>
               Register
             </button>
 
-            <button className="secondary-btn" onClick={()=>navigate("/")}>
-              Back to Home
+            <button className="secondary-btns" onClick={()=>navigate("/vendor/login")}>
+              Back to login
             </button>
           </div>
         </div>

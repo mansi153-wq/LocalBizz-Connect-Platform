@@ -1,0 +1,66 @@
+
+
+.admin-orders-container{
+
+  margin-top: 60px;
+
+  padding: 30px;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(120deg,#eef2f7,#f9fbff);
+  min-height: 100vh;
+}
+
+.admin-orders-container h2{
+  text-align:center;
+  margin-bottom:30px;
+  font-size:28px;
+  color:#333;
+}
+
+.admin-orders-container table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 6px 15px rgba(0,0,0,0.08);
+}
+
+.admin-orders-container th{
+  background:linear-gradient(#0d1628,#4b6cb7);
+  color:white;
+  padding:14px;
+  text-align:center;
+  font-size:15px;
+}
+
+.admin-orders-container td{
+  padding:12px;
+  text-align:center;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+  color:#444;
+}
+
+
+.admin-orders-container tr:hover{
+  background:#f6f9fc;
+}
+
+
+.admin-orders-container td:nth-child(5){
+  font-weight:600;
+}
+
+
+.admin-orders-container td:nth-child(5):contains("Pending"){
+  color:#f39c12;
+}
+
+.admin-orders-container td:nth-child(5):contains("Delivered"){
+  color:#2ecc71;
+}
+
+.admin-orders-container td:nth-child(5):contains("Cancelled"){
+  color:#e74c3c;
+}

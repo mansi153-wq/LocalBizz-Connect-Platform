@@ -1,0 +1,89 @@
+/* ================================
+   ADMIN CUSTOMER PAGE
+================================ */
+
+.admin-customers-container{
+
+  /* you can change this anytime */
+  margin-top: 60px;
+
+  padding: 30px;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(120deg,#eef2f7,#f9fbff);
+  min-height: 100vh;
+}
+
+
+/* ================================
+   PAGE TITLE
+================================ */
+
+.admin-customers-container h2{
+  text-align:center;
+  margin-bottom:30px;
+  font-size:28px;
+  color:#333;
+}
+
+
+/* ================================
+   TABLE
+================================ */
+
+.admin-customers-container table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 6px 15px rgba(0,0,0,0.08);
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.admin-customers-container th{
+
+  background:linear-gradient(#0d1628,#4b6cb7);
+  color:white;
+  padding:14px;
+  text-align:center;
+  font-weight:600;
+  font-size:15px;
+}
+
+
+/* ================================
+   TABLE DATA
+================================ */
+
+.admin-customers-container td{
+
+  padding:12px;
+  text-align:center;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+  color:#444;
+}
+
+
+/* ================================
+   ROW HOVER
+================================ */
+
+.admin-customers-container tr:hover{
+  background:#f6f9fc;
+}
+
+
+/* ================================
+   VERIFIED STATUS
+================================ */
+
+.admin-customers-container td:last-child{
+
+  font-weight:600;
+  color:#2ecc71;
+}

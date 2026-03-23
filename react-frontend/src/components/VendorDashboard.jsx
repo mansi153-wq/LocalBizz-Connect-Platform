@@ -10,7 +10,6 @@ function VendorDashboard() {
   const [totalStock, setTotalStock] = useState(0);   // ✅ NEW STATE
 
   const menuItems = [
-    { name: "Home", path: "/" },
     { name: "Dashboard", path: "/vendor/dashboard" },
     { name: "Add Product", path: "/vendor/add-product" },
     { name: "Manage Products", path: "/vendor/manage-products" },
@@ -40,7 +39,7 @@ function VendorDashboard() {
         });
 
       // ✅ FETCH TOTAL STOCK
-      fetch(`http://localhost:5000/api/vendor/products?vendor_id=${vendorId}`)
+      fetch(`http://localhost:5000/vendor/products/${vendorId}`)
         .then(res => res.json())
         .then(data => {
           if (Array.isArray(data)) {
@@ -63,16 +62,7 @@ function VendorDashboard() {
     <div className="vendor-dashboard">
       <aside className="sidebar">
 
-        <div className="vendor-logo">
-          {shopLogo && (
-            <img
-              src={shopLogo}
-              alt="Shop Logo"
-              className="logo-img"
-              onClick={() => navigate("/vendor/account-settings")}
-            />
-          )}
-        </div>
+       
 
         <nav className="menu">
           {menuItems.map((item) => (

@@ -9,11 +9,11 @@ router.post('/register', async (req, res) => {
   const { shopName, ownerName, email, password, mobile } = req.body;
 */
 router.post('/register', async (req, res) => {
-  const { shopName, ownerName, email, password, mobile, shop_logo } = req.body;
+  const { shopName, ownerName, email, password, mobile, address } = req.body;
 
 
   try {
-    if (!shopName || !ownerName || !email || !password) {
+    if (!shopName || !ownerName || !email || !password || !address) {
       return res.json({ success: false, error: 'All fields are required' });
     }
 
@@ -29,11 +29,11 @@ router.post('/register', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const [result] = await db.execute(
-      `INSERT INTO vendors (shop_name, owner_name, email, password, phone, shop_logo,status)
-       VALUES (?, ?,?, ?, ?, ?, 'Active')`,
-      [shopName, ownerName, email, hashedPassword, mobile || null,shop_logo || null]
-    );
+ const [result] = await db.execute(
+  `INSERT INTO vendors (shop_name, owner_name, email, password, phone, address, status)
+   VALUES (?, ?, ?, ?, ?, ?, 'Active')`,
+  [shopName, ownerName, email, hashedPassword, mobile || null, address || null]
+);
 
     res.json({
       success: true,
@@ -49,19 +49,58 @@ router.post('/register', async (req, res) => {
 
 
 /* ---------------------- GET ALL ACTIVE PRODUCTS (FOR CUSTOMERS) ---------------------- */
-router.get('/products', async (req, res) => {
+
+
+
+router.get("/customer/orders/:customer_id", async (req, res) => {
+
+  const { customer_id } = req.params;
+
   try {
-    const [products] = await db.execute(
-      "SELECT * FROM products WHERE status = 'Active'"
-    );
 
-    res.json({ success: true, products });
-  } catch (err) {
-    console.error('GET ALL PRODUCTS ERROR:', err);
-    res.status(500).json({ success: false, error: 'Server error' });
+    const [orders] = await db.execute(`
+      SELECT 
+        o.order_id,
+        o.total_amount,
+        o.order_status,
+        o.order_date,
+      v.shop_name AS vendor_name,
+      v.phone AS vendor_phone,
+      v.address AS vendor_address,
+      v.email AS vendor_email
+      FROM orders o
+      JOIN vendors v ON o.vendor_id = v.vendor_id
+      WHERE o.customer_id = ?
+      ORDER BY o.order_date DESC
+    `,[customer_id]);
+
+    for (let order of orders) {
+
+      const [items] = await db.execute(`
+        SELECT 
+          oi.product_id,
+          p.name AS product_name,
+          oi.quantity,
+          oi.price
+        FROM order_items oi
+        JOIN products p ON oi.product_id = p.product_id
+        WHERE oi.order_id = ?
+      `,[order.order_id]);
+
+      order.items = items;
+    }
+
+    res.json({
+      success:true,
+      orders
+    });
+
+  } catch(err){
+    console.log(err);
+    res.status(500).json({success:false});
   }
-});
 
+});
 
 
 /* ---------------------- VENDOR LOGIN ---------------------- */
@@ -73,14 +112,27 @@ router.post('/login', async (req, res) => {
       return res.json({ success: false, error: 'Email and password required' });
     }
 
-    const [vendors] = await db.execute(
-      'SELECT * FROM vendors WHERE email = ?',
-      [email]
-    );
+  const [vendors] = await db.execute(
+  'SELECT * FROM vendors WHERE email = ? AND status = "Active"',
+  [email]
+);
 
     if (vendors.length === 0) {
-      return res.json({ success: false, error: 'Vendor not found' });
-    }
+
+  const [blockedVendor] = await db.execute(
+    "SELECT * FROM vendors WHERE email = ?",
+    [email]
+  );
+
+  if (blockedVendor.length > 0 && blockedVendor[0].status === "Inactive") {
+    return res.json({
+      success: false,
+      error: "Your account has been blocked by admin"
+    });
+  }
+
+  return res.json({ success: false, error: "Vendor not found" });
+}
 
     const vendor = vendors[0];
 
@@ -98,20 +150,47 @@ router.post('/login', async (req, res) => {
 
 /* ---------------------- ADD PRODUCT ---------------------- */
 router.post('/add-product', async (req, res) => {
+
   const { vendor_id, name, category, price, stock, description, image, status } = req.body;
 
   try {
+
     if (!vendor_id || !name || !price) {
       return res.json({ success: false, error: 'Required fields missing' });
     }
 
+    // 🔴 CHECK VENDOR STATUS FIRST
+    const [vendor] = await db.execute(
+      "SELECT status FROM vendors WHERE vendor_id = ?",
+      [vendor_id]
+    );
+
+    if (vendor.length === 0) {
+      return res.json({
+        success: false,
+        error: "Vendor not found"
+      });
+    }
+
+    if (vendor[0].status === "Inactive") {
+      return res.json({
+        success: false,
+        error: "Your account is blocked. Cannot add products."
+      });
+    }
+
+    // ✅ ADD PRODUCT ONLY IF VENDOR IS ACTIVE
     const [result] = await db.execute(
       `INSERT INTO products (vendor_id, name, category, price, stock, description, image, status)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [vendor_id, name, category, price, stock || 0, description || '', image || null, status || 'Active']
     );
 
-    res.json({ success: true, product_id: result.insertId });
+    res.json({
+      success: true,
+      product_id: result.insertId
+    });
+
   } catch (err) {
     console.error('ADD PRODUCT ERROR:', err);
     res.status(500).json({ success: false, error: 'Server error' });
@@ -182,13 +261,12 @@ router.patch('/update-stock/:id', async (req, res) => {
   }
 });
 
-
 router.get('/profile/:vendor_id', async (req, res) => {
   const { vendor_id } = req.params;
 
   try {
     const [vendors] = await db.execute(
-      'SELECT vendor_id, shop_name, owner_name, email, phone, shop_logo, created_at FROM vendors WHERE vendor_id = ?',
+      'SELECT vendor_id, shop_name, owner_name, email, phone, address, shop_logo, created_at FROM vendors WHERE vendor_id = ?',
       [vendor_id]
     );
 
@@ -202,17 +280,16 @@ router.get('/profile/:vendor_id', async (req, res) => {
     res.status(500).json({ success: false, error: 'Server error' });
   }
 });
-
 router.put('/update-profile/:vendor_id', async (req, res) => {
   const { vendor_id } = req.params;
-  const { shop_name, owner_name, phone, shop_logo } = req.body;
+  const { shop_name, owner_name, phone, address, shop_logo } = req.body;
 
   try {
     await db.execute(
       `UPDATE vendors 
-       SET shop_name=?, owner_name=?, phone=?, shop_logo=? 
+       SET shop_name=?, owner_name=?, phone=?, address=?, shop_logo=? 
        WHERE vendor_id=?`,
-      [shop_name, owner_name, phone, shop_logo, vendor_id]
+      [shop_name, owner_name, phone, address, shop_logo, vendor_id]
     );
 
     res.json({ success: true });
@@ -283,11 +360,29 @@ router.post('/orders', async (req, res) => {
   const { customer_id, vendor_id, items } = req.body;
 
   try {
+    // ✅ BASIC VALIDATION
     if (!customer_id || !vendor_id || !items || items.length === 0) {
-      return res.status(400).json({ success: false, message: 'Invalid order data' });
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid order data'
+      });
+    }
+
+    // 🔥 NEW FIX (IMPORTANT)
+    const [customer] = await db.execute(
+      "SELECT id FROM customers WHERE id = ?",
+      [customer_id]
+    );
+
+    if (customer.length === 0) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid or unauthorized user"
+      });
     }
 
     let total_amount = 0;
+
 
     // 🔥 CHECK STOCK FOR EACH ITEM
     for (let item of items) {
@@ -398,7 +493,7 @@ router.put("/update-order-status", async (req, res) => {
     await db.execute("UPDATE orders SET order_status = ? WHERE order_id = ?", [status, order_id]);
 
     // 2️⃣ If accepted, fetch full order info to send to customer
-    if (status === "Accepted") {
+   if (status === "Confirmed") {
       const [orderDetails] = await db.execute(`
         SELECT o.order_id, o.total_amount, c.name AS customer_name, c.mobile AS customer_mobile,
                v.shop_name, v.phone AS vendor_phone, v.address AS vendor_address,
@@ -425,5 +520,57 @@ router.put("/update-order-status", async (req, res) => {
   }
 });
 
+router.post("/messages/send", async (req, res) => {
+
+  const { order_id, sender_type, sender_id, message } = req.body;
+
+  try {
+
+    if(!order_id || !sender_type || !sender_id || !message){
+      return res.json({success:false, message:"Missing fields"});
+    }
+
+    await db.execute(
+      `INSERT INTO messages (order_id, sender_type, sender_id, message)
+       VALUES (?, ?, ?, ?)`,
+      [order_id, sender_type, sender_id, message]
+    );
+
+    res.json({
+      success:true,
+      message:"Message sent"
+    });
+
+  } catch(err){
+    console.log(err);
+    res.status(500).json({success:false});
+  }
+
+});
+
+router.get("/messages/:order_id", async (req, res) => {
+
+  const { order_id } = req.params;
+
+  try{
+
+    const [messages] = await db.execute(
+      `SELECT * FROM messages
+       WHERE order_id = ?
+       ORDER BY sent_at ASC`,
+      [order_id]
+    );
+
+    res.json({
+      success:true,
+      messages
+    });
+
+  } catch(err){
+    console.log(err);
+    res.status(500).json({success:false});
+  }
+
+});
 
 module.exports = router;

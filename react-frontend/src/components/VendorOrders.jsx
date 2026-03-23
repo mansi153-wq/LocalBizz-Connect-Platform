@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./VendorOrders.css";
+// ✅ import the chat component
+import OrderChat from "./OrderChat"; 
 
 function VendorOrders() {
   const [orders, setOrders] = useState([]);
@@ -26,16 +28,16 @@ function VendorOrders() {
 
 
   const updateStatus = (orderId, status) => {
-  fetch("http://localhost:5000/vendor/update-order-status", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      order_id: orderId,
-      status: status
+    fetch("http://localhost:5000/vendor/update-order-status", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        order_id: orderId,
+        status: status
+      })
     })
-  })
     .then(res => res.json())
     .then(data => {
       if (data.success) {
@@ -52,61 +54,70 @@ function VendorOrders() {
       }
     })
     .catch(err => console.error("Update error:", err));
-};
+  };
 
- return (
-  <div className="vendor-orders-container">
-    <h2>Customer Orders</h2>
+  return (
+    
+    <div className="vendor-orders-container">
+     
+    
+      {orders.length === 0 ? (
+        <p>No orders found</p>
+      ) : (
+        <table className="orders-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Actions / Chat</th>
+            </tr>
+          </thead>
 
-    {orders.length === 0 ? (
-      <p>No orders found</p>
-    ) : (
-      <table className="orders-table">
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Total</th>
-            <th>Status</th>
-            <th>Date</th>
-          </tr>
-        </thead>
+          <tbody>
+            {orders.map(order => (
+              <tr key={order.order_id}>
+                <td>{order.order_id}</td>
+                <td>{order.customer_name}</td>
+                <td>₹{order.total_amount}</td>
+                <td>{order.order_status}</td>
+                <td>{new Date(order.order_date).toLocaleString()}</td>
+                <td>
+                  {order.order_status === "Pending" && (
+                    <>
+                      <button
+                        onClick={() => updateStatus(order.order_id, "Confirmed")}
+                      >
+                        Accept
+                      </button>
 
-       <tbody>
-  {orders.map(order => (
-    <tr key={order.order_id}>
-      <td>{order.order_id}</td>
-      <td>{order.customer_name}</td>
-      <td>₹{order.total_amount}</td>
-      <td>{order.order_status}</td>
-      <td>{new Date(order.order_date).toLocaleString()}</td>
-      <td>
-        
-      {order.order_status === "Pending" && (
-  <>
-    <button
-      onClick={() => updateStatus(order.order_id, "Confirmed")}
-    >
-      Accept
-    </button>
+                      <button
+                        onClick={() => updateStatus(order.order_id, "Cancelled")}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        Reject
+                      </button>
+                    </>
+                  )}
 
-    <button
-      onClick={() => updateStatus(order.order_id, "Cancelled")}
-      style={{ marginLeft: "10px" }}
-    >
-      Reject
-    </button>
-  </>
-)}
-        
-      </td>
-    </tr>
-  ))}
-</tbody>
-      </table>
-    )}
-  </div>
-);
+                  {/* ✅ show chat only if order is confirmed */}
+                  {order.order_status === "Confirmed" && (
+                    <OrderChat
+                      order_id={order.order_id}
+                      userType="vendor"
+                      userId={vendorId}
+                    />
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 }
 
 export default VendorOrders;

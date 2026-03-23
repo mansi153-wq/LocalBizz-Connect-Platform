@@ -3,9 +3,10 @@
 =================================*/
 .manage-page {
   padding: 30px;
-  background: linear-gradient(120deg, #eef2f7, #f9fbff);
+ background: linear-gradient(120deg, #eef2f7, #f9fbff);
   min-height: 100vh;
   font-family: "Segoe UI", sans-serif;
+   
 }
 
 .manage-title {
@@ -24,12 +25,13 @@
   background: white;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+   box-shadow: 0 8px 25px rgba(0,0,0,0.09);
 }
 
-.products-table thead {
-  background: linear-gradient(90deg,#4b6cb7,#182848);
-  color: white;
+.products-table thead {  background: linear-gradient(90deg,#182848,#4b6cb7);
+
+  
+  color: #f1f5ff;
 }
 
 .products-table th,
@@ -39,7 +41,7 @@
 }
 
 .products-table tbody tr {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #ffffff;
   transition: 0.2s;
 }
 
@@ -62,7 +64,7 @@
 }
 
 .actions-btn {
-  background: linear-gradient(90deg,#4b6cb7,#182848);
+  background: linear-gradient(90deg,#182848,#4b6cb7);
   color: white;
   border: none;
   padding: 6px 14px;
@@ -81,7 +83,7 @@
    DROPDOWN MENU
 =================================*/
 .dropdown-menu {
-  position: absolute;
+  position: relative;
   top: 35px;
   right: 0;
   background-color: white;
@@ -92,6 +94,7 @@
   z-index: 10;
   overflow: hidden;
   min-width: 130px;
+  max-height: 200px;
 }
 
 .dropdown-menu button {
