@@ -9,7 +9,7 @@ import CustomerLayout from "./components/CustomerLayout";
 import CustomerDashboard from "./components/CustomerDashboard";
 import CustomerOrders from "./components/CustomerOrders";
 import About from "./components/About";
-import Contact from "./components/contact";
+import Contact from "./components/Contact";
 
 import VendorSignup from "./components/VendorSignup";
 import VendorLogin from "./components/VendorLogin";
@@ -17,9 +17,9 @@ import VendorDashboard from "./components/VendorDashboard";
 import VendorHome from "./components/VendorHome";
 import VLayout from "./components/VLayout";
 import AddProduct from "./components/AddProduct";
-import ManageProducts from "./components/manageproducts";
+import ManageProducts from "./components/ManageProducts";
 import VendorOrders from "./components/VendorOrders";
-import Accountsetting from "./components/Accountsetting";
+import AccountSetting from "./components/AccountSetting";
 import Inventory from "./components/Inventory";
 
 import AdminLayout from "./components/AdminLayout";
@@ -41,7 +41,7 @@ function App() {
   return (
     <Routes>
 
-      {/* ================= PUBLIC ROUTES (LOCKED AFTER LOGIN) ================= */}
+      {/* ================= PUBLIC ROUTES ================= */}
       <Route
         path="/"
         element={
@@ -73,14 +73,11 @@ function App() {
 
       {/* ================= VENDOR ================= */}
       <Route path="/vendor" element={<VLayout />}>
-
-        {/* Public vendor pages */}
         <Route path="home" element={<Home />} />
         <Route path="explore" element={<Explore />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
 
-        {/* Dashboard */}
         <Route path="" element={<VendorDashboard />}>
           <Route index element={<VendorHome />} />
           <Route path="dashboard" element={<VendorHome />} />
@@ -88,11 +85,11 @@ function App() {
           <Route path="manage-products" element={<ManageProducts />} />
           <Route path="orders" element={<VendorOrders />} />
           <Route path="inventory" element={<Inventory />} />
-          <Route path="account-settings" element={<Accountsetting />} />
+          <Route path="account-settings" element={<AccountSetting />} />
         </Route>
       </Route>
 
-      {/* ================= ADMIN LOGIN (FIXED) ================= */}
+      {/* ================= ADMIN LOGIN ================= */}
       <Route
         path="/admin/login"
         element={
