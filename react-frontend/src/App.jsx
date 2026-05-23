@@ -19,10 +19,10 @@ import VLayout from "./components/VLayout";
 import AddProduct from "./components/AddProduct";
 import ManageProducts from "./components/ManageProducts";
 import VendorOrders from "./components/VendorOrders";
-import AccountSetting from "./components/AccountSetting";
+import AccountSetting from "./components/Accountsetting";
 import Inventory from "./components/Inventory";
 
-import AdminLayout from "./components/AdminLayout";
+import AdminLayout from "./components/adminLayout";
 import AdminLogin from "./components/AdminLogin";
 import AdminDashboard from "./components/AdminDashboard";
 import AdminVendors from "./components/AdminVendors";
