@@ -12,7 +12,7 @@ LocalBiz Connect is a full-stack marketplace web application that connects custo
 
 | Service | URL | Role |
 |---------|-----|------|
-| **Frontend** | [https://localbizz-frontend.onrender.com](https://localbizz-frontend.onrender.com) | React app (open this in the browser) |
+| **Frontend**    | [https://localbizz-frontend.onrender.com](https://localbizz-frontend.onrender.com) | React app (open this in the browser) |
 | **Backend API** | [https://localbizz-connect-platform.onrender.com](https://localbizz-connect-platform.onrender.com) | Node.js / Express REST API |
 
 **API health check:** [https://localbizz-connect-platform.onrender.com/health](https://localbizz-connect-platform.onrender.com/health)
@@ -115,35 +115,35 @@ LocalBiz Connect is a full-stack marketplace web application that connects custo
 
 ## Project structure
 
-```txt
 LocalBizz-Connect-Platform/
-Γö£ΓöÇΓöÇ Backend/
-Γöé   Γö£ΓöÇΓöÇ admin.js               # Admin API routes
-Γöé   Γö£ΓöÇΓöÇ db.js                  # MySQL connection pool (env-based)
-Γöé   Γö£ΓöÇΓöÇ db.sql                 # Sample customers table SQL
-Γöé   Γö£ΓöÇΓöÇ schema-aiven.sql       # Full schema for cloud MySQL (Aiven / Render)
-Γöé   Γö£ΓöÇΓöÇ VendorRouts.js         # Vendor & product API routes
-Γöé   Γö£ΓöÇΓöÇ servers.js             # Main Express server (used in production)
-Γöé   Γö£ΓöÇΓöÇ server.js              # Legacy HTTP server (local port 3000)
-Γöé   Γö£ΓöÇΓöÇ package.json
-Γöé   ΓööΓöÇΓöÇ .env.example
-Γöé
-Γö£ΓöÇΓöÇ react-frontend/
-Γöé   Γö£ΓöÇΓöÇ public/
-Γöé   Γö£ΓöÇΓöÇ src/
-Γöé   Γöé   Γö£ΓöÇΓöÇ assets/
-Γöé   Γöé   Γö£ΓöÇΓöÇ components/        # Pages & layouts (Customer, Vendor, Admin)
-Γöé   Γöé   Γö£ΓöÇΓöÇ App.jsx
-Γöé   Γöé   ΓööΓöÇΓöÇ main.jsx           # API URL rewrite for production
-Γöé   Γö£ΓöÇΓöÇ index.html
-Γöé   Γö£ΓöÇΓöÇ vite.config.js
-Γöé   ΓööΓöÇΓöÇ .env.example
-Γöé
-Γö£ΓöÇΓöÇ screenshots/
-Γö£ΓöÇΓöÇ render.yaml                # Render Blueprint (backend + frontend)
-Γö£ΓöÇΓöÇ DEPLOY_RENDER.md           # Detailed Render deploy notes
-ΓööΓöÇΓöÇ readme.md
-```
+│
+├── Backend/
+│   ├── admin.js                 # Admin API routes
+│   ├── db.js                    # MySQL connection pool (env-based)
+│   ├── db.sql                   # Sample customers table SQL
+│   ├── schema-aiven.sql         # Full schema for cloud MySQL (Aiven / Render)
+│   ├── VendorRouts.js           # Vendor & Product API routes
+│   ├── servers.js               # Main Express server (Production)
+│   ├── server.js                # Legacy HTTP server (Local port 3000)
+│   ├── package.json
+│   └── .env.example
+│
+├── react-frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/          # Customer, Vendor & Admin pages
+│   │   ├── App.jsx
+│   │   └── main.jsx             # API URL rewrite for production
+│   ├── index.html
+│   ├── vite.config.js
+│   └── .env.example
+│
+├── screenshots/
+│
+├── render.yaml                  # Render Blueprint
+├── DEPLOY_RENDER.md             # Render deployment guide
+└── README.md
 
 ---
 
@@ -182,16 +182,27 @@ npm install
 ```
 
 ### 3. Configure the database
+## Database Setup
 
-**Option A ΓÇö Local MySQL**
+### Option A — Local MySQL
 
-1. Create database: `simple_login`
-2. Import `Backend/db.sql` and ensure all required tables exist (`customers`, `vendors`, `products`, `orders`, `order_items`, `messages`, `admin`), or run `Backend/schema-aiven.sql` against your local database (edit `USE defaultdb` to `USE simple_login` if needed).
+1. Create a database named `simple_login`.
+2. Import `Backend/db.sql` and ensure all required tables exist:
 
-**Option B ΓÇö Cloud MySQL (Aiven)**
+   * `customers`
+   * `vendors`
+   * `products`
+   * `orders`
+   * `order_items`
+   * `messages`
+   * `admin`
 
-1. Create a MySQL service on Aiven and wait until status is **Running**.
-2. Connect with the MySQL client and run:
+Alternatively, run `Backend/schema-aiven.sql` against your local database (change `USE defaultdb` to `USE simple_login` if needed).
+
+### Option B — Cloud MySQL (Aiven)
+
+1. Create a MySQL service on Aiven and wait until its status is **Running**.
+2. Connect using the MySQL client:
 
 ```bash
 mysql --user avnadmin -p --host YOUR_AIVEN_HOST --port YOUR_PORT --ssl-mode=REQUIRED defaultdb
@@ -201,9 +212,9 @@ mysql --user avnadmin -p --host YOUR_AIVEN_HOST --port YOUR_PORT --ssl-mode=REQU
 source /path/to/Backend/schema-aiven.sql
 ```
 
-### 4. Backend environment variables
+## Backend Environment Variables
 
-Copy `Backend/.env.example` to `Backend/.env` and set:
+Copy `Backend/.env.example` to `Backend/.env` and configure:
 
 ```env
 PORT=5000
@@ -215,146 +226,186 @@ DB_NAME=simple_login
 DB_SSL=false
 ```
 
-### 5. Frontend environment (optional for local API)
+## Frontend Environment (Optional)
 
-Create `react-frontend/.env` if the API is not on `localhost:5000`:
+Create `react-frontend/.env` if your API is not running on `localhost:5000`:
 
 ```env
 VITE_API_BASE_URL=http://localhost:5000
 ```
 
-`main.jsx` rewrites `http://localhost:5000` and `http://localhost:3000` to `VITE_API_BASE_URL` when it is set.
+`main.jsx` automatically rewrites `http://localhost:5000` and `http://localhost:3000` to `VITE_API_BASE_URL` when provided.
 
-### 6. Start the servers
+## Running the Project
 
-**Terminal 1 ΓÇö Backend (main API):**
+### Terminal 1 — Backend
 
 ```bash
 cd Backend
 npm start
 ```
 
-Runs `servers.js` on **http://localhost:5000**
+Runs `servers.js` on:
 
-**Terminal 2 ΓÇö Frontend:**
+```
+http://localhost:5000
+```
+
+### Terminal 2 — Frontend
 
 ```bash
 cd react-frontend
 npm run dev
 ```
 
-Runs on **http://localhost:5173**
+Runs on:
 
-> `server.js` is a legacy customer auth server on port **3000**. Production uses **`servers.js` only** (customer signup/login and vendor/admin routes on one port).
+```
+http://localhost:5173
+```
 
----
-
-## Dependencies
-
-### Frontend
-- React
-- React Router DOM
-- React Icons
-- Chart.js
-- react-chartjs-2
-- react-toastify
-- Vite
-
-### Backend
-- express
-- mysql2
-- bcrypt
-- cors
-- body-parser
+> `server.js` is a legacy customer authentication server running on port `3000`. Production deployments use `servers.js` only.
 
 ---
 
-## Deploy on Render
+# Dependencies
 
-Full steps are in [DEPLOY_RENDER.md](DEPLOY_RENDER.md). Summary:
+## Frontend
 
-### Backend (`LocalBizz-Connect-Platform` web service)
+* React
+* React Router DOM
+* React Icons
+* Chart.js
+* react-chartjs-2
+* react-toastify
+* Vite
 
-- **Root directory:** `Backend`
-- **Build command:** `npm install`
-- **Start command:** `npm start`
-- **Environment variables:**
+## Backend
 
-| Key | Description |
-|-----|-------------|
-| `DB_HOST` | Cloud MySQL host (e.g. Aiven) |
-| `DB_PORT` | e.g. `21871` (Aiven) or `3306` |
-| `DB_USER` | e.g. `avnadmin` |
-| `DB_PASSWORD` | Database password |
-| `DB_NAME` | e.g. `defaultdb` |
-| `DB_SSL` | `true` for Aiven |
-| `NODE_ENV` | `production` |
-
-### Frontend (`localbizz-frontend` static site)
-
-- **Root directory:** `react-frontend`
-- **Build command:** `npm install && npm run build`
-- **Publish directory:** `dist`
-- **Environment variable:**
-
-| Key | Value (example) |
-|-----|-----------------|
-| `VITE_API_BASE_URL` | `https://localbizz-connect-platform.onrender.com` |
-
-Redeploy the frontend after changing `VITE_API_BASE_URL` (Vite embeds it at build time).
-
-### Verify after deploy
-
-- Backend: `/health` and `/vendor/products` return `"success": true`
-- Frontend: open **https://localbizz-frontend.onrender.com**
-- Signup OTP (demo): check **backend** service **Logs** on Render for `OTP (demo): XXXXXX`
+* express
+* mysql2
+* bcrypt
+* cors
+* body-parser
 
 ---
 
-## Key functionalities
+# Deploy on Render
 
-- Full-stack marketplace with Customer, Vendor, and Admin roles  
-- Authentication and role-based routing  
-- Product CRUD and inventory tracking  
-- Order placement and status workflow  
-- CustomerΓÇôvendor messaging per order  
-- Search and category filters on Explore  
-- Admin analytics with Chart.js  
-- REST API with Express and MySQL  
-- Responsive dashboards per role  
-- bcrypt for vendor passwords  
+For detailed instructions, see `DEPLOY_RENDER.md`.
+
+## Backend Service
+
+**Service Type:** Web Service
+
+| Setting        | Value       |
+| -------------- | ----------- |
+| Root Directory | Backend     |
+| Build Command  | npm install |
+| Start Command  | npm start   |
+
+### Environment Variables
+
+| Key         | Description           |
+| ----------- | --------------------- |
+| DB_HOST     | Cloud MySQL host      |
+| DB_PORT     | 21871 (Aiven) or 3306 |
+| DB_USER     | Database username     |
+| DB_PASSWORD | Database password     |
+| DB_NAME     | Database name         |
+| DB_SSL      | true for Aiven        |
+| NODE_ENV    | production            |
+
+## Frontend Service
+
+**Service Type:** Static Site
+
+| Setting           | Value                        |
+| ----------------- | ---------------------------- |
+| Root Directory    | react-frontend               |
+| Build Command     | npm install && npm run build |
+| Publish Directory | dist                         |
+
+### Environment Variables
+
+| Key               | Example Value                     |
+| ----------------- | --------------------------------- |
+| VITE_API_BASE_URL | https://your-backend.onrender.com |
+
+> Redeploy the frontend after updating `VITE_API_BASE_URL`, as Vite embeds environment variables during build time.
 
 ---
 
-## Default demo admin (after `schema-aiven.sql`)
+# Verification After Deployment
 
-| Field | Value |
-|-------|--------|
-| Email | `admin@localbizz.com` |
-| Password | `Admin@123` |
+### Backend Checks
 
-Change these in production.
+* `/health` returns success
+* `/vendor/products` returns `"success": true`
 
----
+### Frontend Check
 
-## Troubleshooting
+Open your frontend deployment URL.
 
-| Issue | Likely cause |
-|-------|----------------|
-| Explore page empty | No vendor products yet ΓÇö log in as vendor and add products |
-| Signup / API 500 on Render | Database env vars missing or tables not created |
-| Vendor login 500 | DB connection or SQL mode ΓÇö ensure latest code is deployed |
-| `Cannot GET /` on backend URL | Normal ΓÇö use frontend URL for the website |
-| OTP not received | Demo app logs OTP in backend console / Render Logs, not email |
+### OTP Demo
+
+Check Render backend logs for:
+
+```text
+OTP (demo): XXXXXX
+```
 
 ---
 
-## Author
+# Key Features
 
-**Mansi Kawale** ΓÇö [GitHub](https://github.com/mansi153-wq)
+* Customer, Vendor, and Admin roles
+* Authentication and role-based routing
+* Product management (CRUD)
+* Inventory tracking
+* Order placement and management
+* Customer–Vendor messaging
+* Search and category filtering
+* Admin analytics dashboard
+* REST API with Express and MySQL
+* Responsive UI
+* Secure password hashing using bcrypt
 
 ---
 
-## License
+# Default Admin Account
 
-This project is for educational / portfolio use. Add a license file if you publish it publicly.
+After importing `schema-aiven.sql`:
+
+| Field    | Value                                             |
+| -------- | ------------------------------------------------- |
+| Email    | [admin@localbizz.com](mailto:admin@localbizz.com) |
+| Password | Admin@123                                         |
+
+> Change the default credentials before deploying to production.
+
+---
+
+# Troubleshooting
+
+| Issue                       | Possible Cause                                   |
+| --------------------------- | ------------------------------------------------ |
+| Explore page is empty       | No vendor products have been added               |
+| API returns 500 on Render   | Database variables missing or tables not created |
+| Vendor login returns 500    | Database connection issue or outdated deployment |
+| Cannot GET / on backend URL | Normal behavior; use the frontend URL            |
+| OTP not received            | OTP is logged to backend console / Render logs   |
+
+---
+
+# Author
+
+**Mansi Kawale**
+
+GitHub: https://github.com/mansi153-wq
+
+---
+
+# License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
