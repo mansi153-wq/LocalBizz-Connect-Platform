@@ -7,7 +7,7 @@
   gap: 1px;
   padding: 130px;
   flex-wrap: wrap;
-  background: url(C:\Users\USER\OneDrive\Desktop\new\react-frontend\src\components\admin.avif) no-repeat center center/cover;
+  background: url("./admin.avif") no-repeat center center/cover;
   background-size: 100%;      /* zoom in */
 
 }
