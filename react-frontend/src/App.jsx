@@ -22,7 +22,7 @@ import VendorOrders from "./components/VendorOrders";
 import AccountSetting from "./components/Accountsetting";
 import Inventory from "./components/inventory";
 
-import AdminLayout from "./components/adminLayout";
+import AdminLayout from "./components/AdminLayout";
 import AdminLogin from "./components/AdminLogin";
 import AdminDashboard from "./components/AdminDashboard";
 import AdminVendors from "./components/AdminVendors";
