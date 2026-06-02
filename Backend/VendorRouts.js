@@ -113,7 +113,7 @@ router.post('/login', async (req, res) => {
     }
 
   const [vendors] = await db.execute(
-  'SELECT * FROM vendors WHERE email = ? AND status = "Active"',
+  "SELECT * FROM vendors WHERE email = ? AND status = 'Active'",
   [email]
 );
 
