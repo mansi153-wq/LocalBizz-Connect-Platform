@@ -9,7 +9,7 @@ import CustomerLayout from "./components/CustomerLayout";
 import CustomerDashboard from "./components/CustomerDashboard";
 import CustomerOrders from "./components/CustomerOrders";
 import About from "./components/About";
-import Contact from "./components/Contact";
+import Contact from "./components/contact";
 
 import VendorSignup from "./components/VendorSignup";
 import VendorLogin from "./components/VendorLogin";
@@ -17,10 +17,10 @@ import VendorDashboard from "./components/VendorDashboard";
 import VendorHome from "./components/VendorHome";
 import VLayout from "./components/VLayout";
 import AddProduct from "./components/AddProduct";
-import ManageProducts from "./components/ManageProducts";
+import ManageProducts from "./components/manageproducts";
 import VendorOrders from "./components/VendorOrders";
 import AccountSetting from "./components/Accountsetting";
-import Inventory from "./components/Inventory";
+import Inventory from "./components/inventory";
 
 import AdminLayout from "./components/adminLayout";
 import AdminLogin from "./components/AdminLogin";
