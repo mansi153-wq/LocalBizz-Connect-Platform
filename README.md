@@ -1,249 +1,360 @@
-# LocalBiz Connect
-![Alt Text](screenshots/1.png)
+﻿# LocalBiz Connect
 
+![LocalBiz Connect](screenshots/1.png)
 
-# Introduction
-LocalBiz Connect is a full-stack marketplace web application developed to connect customers with local vendors through a modern digital platform. The application allows customers to explore products, place orders, track order status, and communicate directly with vendors. Vendors can manage products, inventory, customer orders, and account settings through a dedicated dashboard, while administrators can monitor overall platform activity using an analytics-based admin panel.
+## Introduction
 
+LocalBiz Connect is a full-stack marketplace web application that connects customers with local vendors through a modern digital platform. Customers can explore products, place orders, track order status, and chat with vendors. Vendors manage products, inventory, orders, and account settings from a dedicated dashboard. Administrators monitor platform activity through an analytics-based admin panel.
 
-## 🚀 Features
+---
 
-### 👤 Customer Module
-- Customer Signup & Login
-- Product Exploration
-- Search & Category Filtering
-- Search & Category Filtering
-- Place Product Inquiries/Orders and  Customer-Vendor Chat
-- Profile Management
+## Live deployment (Render)
 
+| Service | URL | Role |
+|---------|-----|------|
+| **Frontend** | [https://localbizz-frontend.onrender.com](https://localbizz-frontend.onrender.com) | React app (open this in the browser) |
+| **Backend API** | [https://localbizz-connect-platform.onrender.com](https://localbizz-connect-platform.onrender.com) | Node.js / Express REST API |
 
-### 🛍 Vendor Module
-- Vendor Registration & Login
--Vendor Dashboard
--Adding Products
--Update / Delete Products
-- Inventory Management
-- Order Management, - Accept / Reject Order
-- Account Settings Dashboard
+**API health check:** [https://localbizz-connect-platform.onrender.com/health](https://localbizz-connect-platform.onrender.com/health)
 
+> The backend root URL (`/`) shows `Cannot GET /` ΓÇö that is normal. The API is meant to be used by the frontend, not opened as a website.
 
-  ### 🛠 Admin Module
-- Vendor Management
-- Customer Management
-- Product Moderation
-- Order Monitoring
-- Analytics Dashboard
+**Database:** Hosted on [Aiven](https://aiven.io/) (MySQL, cloud). Local development can use MySQL on your machine with database name `simple_login` or `defaultdb` on Aiven.
 
---------------------------------------------------
+**Repository:** [https://github.com/mansi153-wq/LocalBizz-Connect-Platform](https://github.com/mansi153-wq/LocalBizz-Connect-Platform)
 
-## 💻 Tech Stack
+---
+
+## Features
+
+### Customer module
+- Customer signup & login (OTP verification ΓÇö demo OTP is logged on the backend server)
+- Product exploration
+- Search & category filtering
+- Place product inquiries/orders
+- CustomerΓÇôvendor chat
+- Profile management
+
+### Vendor module
+- Vendor registration & login
+- Vendor dashboard
+- Add, update, and delete products
+- Inventory management
+- Order management (accept / reject / status updates)
+- Account settings
+
+### Admin module
+- Vendor management
+- Customer management
+- Product moderation
+- Order monitoring
+- Analytics dashboard
+
+---
+
+## Tech stack
 
 | Technology | Purpose |
 |------------|---------|
-| React.js | Frontend Development |
-| Node.js | Backend Runtime |
-| Express.js | API Development |
+| React.js | Frontend UI |
+| Vite | Frontend build tool |
+| Node.js | Backend runtime |
+| Express.js | REST API |
 | MySQL | Database |
-| Chart.js | Analytics Visualization |
-| bcrypt | Password Security |
-- bcrypt
-- cors
-- body-parser
+| Chart.js | Analytics charts |
+| bcrypt | Vendor password hashing |
+| mysql2 | Database driver |
+| cors | Cross-origin API access |
+| body-parser | Request body parsing |
 
+---
 
 ## Screenshots
 
-- ![Alt Text](screenshots/4.png)
+![Screenshot](screenshots/4.png)
 
-- ![Alt Text](screenshots/3.png)
+![Screenshot](screenshots/3.png)
 
-- ![Alt Text](screenshots/2.png)
+![Screenshot](screenshots/2.png)
 
-- ![Alt Text](screenshots/5.png)
+![Screenshot](screenshots/5.png)
 
-- ![Alt Text](screenshots/7.png)
+![Screenshot](screenshots/7.png)
 
-- ![Alt Text](screenshots/6.png)
- 
+![Screenshot](screenshots/6.png)
 
-- ![Alt Text](screenshots/21.png)
+![Screenshot](screenshots/21.png)
 
-- ![Alt Text](screenshots/14.png)
+![Screenshot](screenshots/14.png)
 
-- ![Alt Text](screenshots/15.png)
- 
-- ![Alt Text](screenshots/16.png)
+![Screenshot](screenshots/15.png)
 
-- ![Alt Text](screenshots/17.png)
+![Screenshot](screenshots/16.png)
 
-- ![Alt Text](screenshots/19.png)
+![Screenshot](screenshots/17.png)
 
-- ![Alt Text](screenshots/18.png)
+![Screenshot](screenshots/19.png)
 
-- ![Alt Text](screenshots/20.png)
+![Screenshot](screenshots/18.png)
 
+![Screenshot](screenshots/20.png)
 
-- ![Alt Text](screenshots/8.png)
+![Screenshot](screenshots/8.png)
 
-- ![Alt Text](screenshots/9.png)
+![Screenshot](screenshots/9.png)
 
-- ![Alt Text](screenshots/10.png)
+![Screenshot](screenshots/10.png)
 
-- ![Alt Text](screenshots/11.png)
+![Screenshot](screenshots/11.png)
 
-- ![Alt Text](screenshots/12.png)
+![Screenshot](screenshots/12.png)
 
-- ![Alt Text](screenshots/13.png)
-  
+![Screenshot](screenshots/13.png)
 
-## Project Structure
+---
+
+## Project structure
 
 ```txt
-LOCALBIZZ_CONNECT/
-├── Backend/
-│   ├── node_modules/          # Backend dependencies
-│   ├── admin.js               # Admin-related backend logic
-│   ├── db.js                  # Database connection setup
-│   ├── db.sql                 # MySQL database schema
-│   ├── VendorRouts.js         # Vendor API routes
-│   ├── server.js              # Main backend server
-│   ├── servers.js             # Additional server configuration
-│   ├── package.json           # Backend dependencies & scripts
-│   └── package-lock.json
-│
-├── react-frontend/
-│   ├── public/                # Public assets
-│   ├── src/
-│   │   ├── assets/            # Images & static files
-│   │   ├── components/        # React components
-│   │   │   ├── AdminDashboard.jsx
-│   │   │   ├── AdminProducts.jsx
-│   │   │   ├── CustomerDashboard.jsx
-│   │   │   ├── CustomerOrders.jsx
-│   │   │   ├── VendorDashboard.jsx
-│   │   │   ├── VendorOrders.jsx
-│   │   │   ├── Login.jsx
-│   │   │   ├── Signup.jsx
-│   │   │   ├── Navbar.jsx
-│   │   │   ├── Sidebar components
-│   │   │   └── Product management modules
-│   │   │
-│   │   ├── App.jsx            # Main React app component
-│   │   ├── main.jsx           # React entry point
-│   │   ├── App.css
-│   │   └── index.css
-│   │
-│   ├── index.html
-│   ├── vite.config.js         # Vite configuration
-│   ├── eslint.config.js       # ESLint configuration
-│   ├── vercel.json            # Vercel deployment config
-│   ├── package.json
-│   ├── package-lock.json
-│   └── README.md
-│
-├── .gitignore                 # Ignored files & folders
-└── README.md                  # Project documentation
+LocalBizz-Connect-Platform/
+Γö£ΓöÇΓöÇ Backend/
+Γöé   Γö£ΓöÇΓöÇ admin.js               # Admin API routes
+Γöé   Γö£ΓöÇΓöÇ db.js                  # MySQL connection pool (env-based)
+Γöé   Γö£ΓöÇΓöÇ db.sql                 # Sample customers table SQL
+Γöé   Γö£ΓöÇΓöÇ schema-aiven.sql       # Full schema for cloud MySQL (Aiven / Render)
+Γöé   Γö£ΓöÇΓöÇ VendorRouts.js         # Vendor & product API routes
+Γöé   Γö£ΓöÇΓöÇ servers.js             # Main Express server (used in production)
+Γöé   Γö£ΓöÇΓöÇ server.js              # Legacy HTTP server (local port 3000)
+Γöé   Γö£ΓöÇΓöÇ package.json
+Γöé   ΓööΓöÇΓöÇ .env.example
+Γöé
+Γö£ΓöÇΓöÇ react-frontend/
+Γöé   Γö£ΓöÇΓöÇ public/
+Γöé   Γö£ΓöÇΓöÇ src/
+Γöé   Γöé   Γö£ΓöÇΓöÇ assets/
+Γöé   Γöé   Γö£ΓöÇΓöÇ components/        # Pages & layouts (Customer, Vendor, Admin)
+Γöé   Γöé   Γö£ΓöÇΓöÇ App.jsx
+Γöé   Γöé   ΓööΓöÇΓöÇ main.jsx           # API URL rewrite for production
+Γöé   Γö£ΓöÇΓöÇ index.html
+Γöé   Γö£ΓöÇΓöÇ vite.config.js
+Γöé   ΓööΓöÇΓöÇ .env.example
+Γöé
+Γö£ΓöÇΓöÇ screenshots/
+Γö£ΓöÇΓöÇ render.yaml                # Render Blueprint (backend + frontend)
+Γö£ΓöÇΓöÇ DEPLOY_RENDER.md           # Detailed Render deploy notes
+ΓööΓöÇΓöÇ readme.md
 ```
-------------------------------------------------------------------------------------------
 
-## ⚙️ Installation & Setup
+---
 
-### 📌 Prerequisites
-Make sure the following are installed on your system:
+## Prerequisites
 
-- Node.js
+- [Node.js](https://nodejs.org/) (LTS recommended)
 - npm
-- MySQL
-- Git
+- [MySQL](https://www.mysql.com/) (local development)
+- [Git](https://git-scm.com/)
 
---------------------------_---
+---
 
-## 📦 Dependencies
+## Local installation & setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/mansi153-wq/LocalBizz-Connect-Platform.git
+cd LocalBizz-Connect-Platform
+```
+
+### 2. Install dependencies
+
+**Frontend:**
+
+```bash
+cd react-frontend
+npm install
+```
+
+**Backend:**
+
+```bash
+cd ../Backend
+npm install
+```
+
+### 3. Configure the database
+
+**Option A ΓÇö Local MySQL**
+
+1. Create database: `simple_login`
+2. Import `Backend/db.sql` and ensure all required tables exist (`customers`, `vendors`, `products`, `orders`, `order_items`, `messages`, `admin`), or run `Backend/schema-aiven.sql` against your local database (edit `USE defaultdb` to `USE simple_login` if needed).
+
+**Option B ΓÇö Cloud MySQL (Aiven)**
+
+1. Create a MySQL service on Aiven and wait until status is **Running**.
+2. Connect with the MySQL client and run:
+
+```bash
+mysql --user avnadmin -p --host YOUR_AIVEN_HOST --port YOUR_PORT --ssl-mode=REQUIRED defaultdb
+```
+
+```sql
+source /path/to/Backend/schema-aiven.sql
+```
+
+### 4. Backend environment variables
+
+Copy `Backend/.env.example` to `Backend/.env` and set:
+
+```env
+PORT=5000
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=simple_login
+DB_SSL=false
+```
+
+### 5. Frontend environment (optional for local API)
+
+Create `react-frontend/.env` if the API is not on `localhost:5000`:
+
+```env
+VITE_API_BASE_URL=http://localhost:5000
+```
+
+`main.jsx` rewrites `http://localhost:5000` and `http://localhost:3000` to `VITE_API_BASE_URL` when it is set.
+
+### 6. Start the servers
+
+**Terminal 1 ΓÇö Backend (main API):**
+
+```bash
+cd Backend
+npm start
+```
+
+Runs `servers.js` on **http://localhost:5000**
+
+**Terminal 2 ΓÇö Frontend:**
+
+```bash
+cd react-frontend
+npm run dev
+```
+
+Runs on **http://localhost:5173**
+
+> `server.js` is a legacy customer auth server on port **3000**. Production uses **`servers.js` only** (customer signup/login and vendor/admin routes on one port).
+
+---
+
+## Dependencies
 
 ### Frontend
-- React.js
+- React
 - React Router DOM
 - React Icons
 - Chart.js
-- React ChartJS 2
-
-### Backend
-- Express.js
-- MySQL2
-- bcrypt
-- body-parser
-- cors
-
-### Tools & Utilities
-- npm
-- Git
+- react-chartjs-2
+- react-toastify
 - Vite
 
-### 1️⃣ Clone the Repository
+### Backend
+- express
+- mysql2
+- bcrypt
+- cors
+- body-parser
 
-```bash
-git clone https://https://github.com/mansi153-wq/LocalBizz_connect.git
-cd LocalBiz-Connect
+---
 
-2️⃣ Install Frontend Dependencies
-cd frontend
-npm install
+## Deploy on Render
 
-3️⃣ Install Backend Dependencies
-cd backend
-npm install
+Full steps are in [DEPLOY_RENDER.md](DEPLOY_RENDER.md). Summary:
 
-4️⃣ Configure MySQL Database
+### Backend (`LocalBizz-Connect-Platform` web service)
 
-Create a MySQL database named:
-simple_login
-Update database credentials inside:
-backend/database.js
+- **Root directory:** `Backend`
+- **Build command:** `npm install`
+- **Start command:** `npm start`
+- **Environment variables:**
 
-5️⃣ Start Servers
+| Key | Description |
+|-----|-------------|
+| `DB_HOST` | Cloud MySQL host (e.g. Aiven) |
+| `DB_PORT` | e.g. `21871` (Aiven) or `3306` |
+| `DB_USER` | e.g. `avnadmin` |
+| `DB_PASSWORD` | Database password |
+| `DB_NAME` | e.g. `defaultdb` |
+| `DB_SSL` | `true` for Aiven |
+| `NODE_ENV` | `production` |
 
-Start Frontend
+### Frontend (`localbizz-frontend` static site)
 
-Open a new terminal:
-1)Terminal 1
-cd frontend
-npm run dev
+- **Root directory:** `react-frontend`
+- **Build command:** `npm install && npm run build`
+- **Publish directory:** `dist`
+- **Environment variable:**
 
-Frontend runs on:
-http://localhost:5173
+| Key | Value (example) |
+|-----|-----------------|
+| `VITE_API_BASE_URL` | `https://localbizz-connect-platform.onrender.com` |
 
-Start Backend Server
+Redeploy the frontend after changing `VITE_API_BASE_URL` (Vite embeds it at build time).
 
+### Verify after deploy
 
-2)Terminal 2:
-cd backend
-node server.js
+- Backend: `/health` and `/vendor/products` return `"success": true`
+- Frontend: open **https://localbizz-frontend.onrender.com**
+- Signup OTP (demo): check **backend** service **Logs** on Render for `OTP (demo): XXXXXX`
 
-3)Terminal 3:
-cd backend
-node servers.js
+---
 
-Backend runs on :
-http://localhost:5000
-http://localhost:5000
+## Key functionalities
 
+- Full-stack marketplace with Customer, Vendor, and Admin roles  
+- Authentication and role-based routing  
+- Product CRUD and inventory tracking  
+- Order placement and status workflow  
+- CustomerΓÇôvendor messaging per order  
+- Search and category filters on Explore  
+- Admin analytics with Chart.js  
+- REST API with Express and MySQL  
+- Responsive dashboards per role  
+- bcrypt for vendor passwords  
 
-## 📊 Key Functionalities
+---
 
-- Full-stack marketplace platform with Customer, Vendor, and Admin modules  
-- Secure authentication and role-based access control  
-- Product management with add, update, delete, and inventory tracking features  
-- Order placement, status updates, and order management system  
-- Customer-vendor communication through integrated chat functionality  
-- Search and category-based product filtering  
-- Admin dashboard with analytics and graphical data visualization  
-- REST API integration using Express.js and MySQL  
-- CRUD operations for products, users, vendors, and orders  
-- Responsive dashboard interfaces for different user roles  
-- Real-time data handling and dynamic UI rendering using React.js  
-- Password encryption and security implementation using bcrypt
+## Default demo admin (after `schema-aiven.sql`)
 
+| Field | Value |
+|-------|--------|
+| Email | `admin@localbizz.com` |
+| Password | `Admin@123` |
 
+Change these in production.
 
+---
 
+## Troubleshooting
 
+| Issue | Likely cause |
+|-------|----------------|
+| Explore page empty | No vendor products yet ΓÇö log in as vendor and add products |
+| Signup / API 500 on Render | Database env vars missing or tables not created |
+| Vendor login 500 | DB connection or SQL mode ΓÇö ensure latest code is deployed |
+| `Cannot GET /` on backend URL | Normal ΓÇö use frontend URL for the website |
+| OTP not received | Demo app logs OTP in backend console / Render Logs, not email |
+
+---
+
+## Author
+
+**Mansi Kawale** ΓÇö [GitHub](https://github.com/mansi153-wq)
+
+---
+
+## License
+
+This project is for educational / portfolio use. Add a license file if you publish it publicly.
