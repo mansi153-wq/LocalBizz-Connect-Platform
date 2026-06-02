@@ -1,4 +1,3 @@
-export { default } from "./adminLayout";
 import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
 import AdminNavbar from "./AdminNavbar";
 import "./AdminLayout.css";
