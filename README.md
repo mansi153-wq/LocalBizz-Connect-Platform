@@ -25,9 +25,9 @@ LocalBiz Connect is a full-stack marketplace web application that connects custo
 
 ---
 
-## Features
+## 🚀 Features
 
-### Customer module
+### 👤 Customer module
 - Customer signup & login (OTP verification ΓÇö demo OTP is logged on the backend server)
 - Product exploration
 - Search & category filtering
@@ -35,7 +35,7 @@ LocalBiz Connect is a full-stack marketplace web application that connects custo
 - CustomerΓÇôvendor chat
 - Profile management
 
-### Vendor module
+### 🛍 Vendor module
 - Vendor registration & login
 - Vendor dashboard
 - Add, update, and delete products
@@ -52,7 +52,7 @@ LocalBiz Connect is a full-stack marketplace web application that connects custo
 
 ---
 
-## Tech stack
+##  💻 Tech stack
 
 | Technology | Purpose |
 |------------|---------|
@@ -114,10 +114,11 @@ LocalBiz Connect is a full-stack marketplace web application that connects custo
 ---
 
 ## Project structure
-
+```txt
 LocalBizz-Connect-Platform/
 │
 ├── Backend/
+|   ├── node_modules/            # Backend dependencies
 │   ├── admin.js                 # Admin API routes
 │   ├── db.js                    # MySQL connection pool (env-based)
 │   ├── db.sql                   # Sample customers table SQL
@@ -147,7 +148,7 @@ LocalBizz-Connect-Platform/
 
 ---
 
-## Prerequisites
+##  📌 Prerequisites
 
 - [Node.js](https://nodejs.org/) (LTS recommended)
 - npm
@@ -156,67 +157,76 @@ LocalBizz-Connect-Platform/
 
 ---
 
-## Local installation & setup
+## 📦 Dependencies
 
-### 1. Clone the repository
+### Frontend
+- React.js
+- React Router DOM
+- React Icons
+- Chart.js
+- React ChartJS 2
+
+### Backend
+- Express.js
+- MySQL2
+- bcrypt
+- body-parser
+- cors
+
+### Tools & Utilities
+- npm
+- Git
+- Vite
+
+⚙️ Installation & Setup Guide
+
+This project can be run in two ways:
+
+Local MySQL Setup (Recommended for Development)
+Cloud MySQL Setup (Aiven Database)
+
+
+### 📥1. Clone the repository
 
 ```bash
 git clone https://github.com/mansi153-wq/LocalBizz-Connect-Platform.git
 cd LocalBizz-Connect-Platform
-```
 
-### 2. Install dependencies
-
-**Frontend:**
-
-```bash
-cd react-frontend
+------------------------------------
+📦 Install Dependencies
+Frontend
+cd frontend
 npm install
-```
-
-**Backend:**
-
-```bash
-cd ../Backend
+Backend
+cd backend
 npm install
-```
+-------------------------------------
+Option 1 — Run with Local MySQL
+Step 1: Create Database
 
-### 3. Configure the database
-## Database Setup
+Create a MySQL database named:
 
-### Option A — Local MySQL
+CREATE DATABASE simple_login;
+Step 2: Configure Database Credentials
 
-1. Create a database named `simple_login`.
-2. Import `Backend/db.sql` and ensure all required tables exist:
+Open:
 
-   * `customers`
-   * `vendors`
-   * `products`
-   * `orders`
-   * `order_items`
-   * `messages`
-   * `admin`
+backend/database.js
 
-Alternatively, run `Backend/schema-aiven.sql` against your local database (change `USE defaultdb` to `USE simple_login` if needed).
+Update your MySQL credentials:
 
-### Option B — Cloud MySQL (Aiven)
+host: "localhost",
+user: "root",
+password: "your_password",
+database: "simple_login"
+Step 3: Configure Environment Variables
 
-1. Create a MySQL service on Aiven and wait until its status is **Running**.
-2. Connect using the MySQL client:
+Create:
 
-```bash
-mysql --user avnadmin -p --host YOUR_AIVEN_HOST --port YOUR_PORT --ssl-mode=REQUIRED defaultdb
-```
+backend/.env
 
-```sql
-source /path/to/Backend/schema-aiven.sql
-```
+Example:
 
-## Backend Environment Variables
-
-Copy `Backend/.env.example` to `Backend/.env` and configure:
-
-```env
 PORT=5000
 DB_HOST=localhost
 DB_PORT=3306
@@ -224,17 +234,95 @@ DB_USER=root
 DB_PASSWORD=your_password
 DB_NAME=simple_login
 DB_SSL=false
-```
+Step 4: Start the Application
+Terminal 1 — Frontend
+cd frontend
+npm run dev
 
-## Frontend Environment (Optional)
+Frontend runs on:
 
-Create `react-frontend/.env` if your API is not running on `localhost:5000`:
+http://localhost:5173
+Terminal 2 — Vendor Backend
+cd backend
+node servers.js
 
-```env
+Runs on:
+
+http://localhost:5000
+Terminal 3 — Customer Authentication Server
+cd backend
+node server.js
+
+Runs on:
+
+http://localhost:3000
+
+
+
+
+### Option B — Cloud MySQL (Aiven)
+Step 1: Create an Aiven MySQL Service
+
+Create a MySQL service in Aiven and wait until the status becomes Running.
+
+Step 2: Import Database Schema
+
+Connect to Aiven:
+
+mysql --user avnadmin -p \
+--host YOUR_AIVEN_HOST \
+--port YOUR_PORT \
+--ssl-mode=REQUIRED defaultdb
+
+Import schema:
+
+source Backend/schema-aiven.sql
+Step 3: Configure Environment Variables
+
+Create:
+
+backend/.env
+
+Example:
+
+PORT=5000
+DB_HOST=YOUR_AIVEN_HOST
+DB_PORT=YOUR_PORT
+DB_USER=avnadmin
+DB_PASSWORD=YOUR_PASSWORD
+DB_NAME=defaultdb
+DB_SSL=true
+Step 4: Start the Application
+Terminal 1 — Frontend
+cd frontend
+npm run dev
+
+Frontend:
+
+http://localhost:5173
+Terminal 2 — Vendor Backend
+cd backend
+node servers.js
+
+Backend:
+
+http://localhost:5000
+Terminal 3 — Customer Authentication Server
+cd backend
+node server.js
+
+Customer Authentication API:
+
+http://localhost:3000
+Frontend Environment (Optional)
+
+If the backend is hosted on a different server, create:
+
+frontend/.env
 VITE_API_BASE_URL=http://localhost:5000
-```
 
-`main.jsx` automatically rewrites `http://localhost:5000` and `http://localhost:3000` to `VITE_API_BASE_URL` when provided.
+The frontend automatically uses this URL for API requests when provided.
+
 
 ## Running the Project
 
@@ -265,28 +353,6 @@ http://localhost:5173
 ```
 
 > `server.js` is a legacy customer authentication server running on port `3000`. Production deployments use `servers.js` only.
-
----
-
-# Dependencies
-
-## Frontend
-
-* React
-* React Router DOM
-* React Icons
-* Chart.js
-* react-chartjs-2
-* react-toastify
-* Vite
-
-## Backend
-
-* express
-* mysql2
-* bcrypt
-* cors
-* body-parser
 
 ---
 
