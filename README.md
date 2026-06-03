@@ -15,13 +15,16 @@ LocalBiz Connect is a full-stack marketplace web application that connects custo
 | **Frontend**    | [https://localbizz-frontend.onrender.com](https://localbizz-frontend.onrender.com) | React app (open this in the browser) |
 | **Backend API** | [https://localbizz-connect-platform.onrender.com](https://localbizz-connect-platform.onrender.com) | Node.js / Express REST API |
 
+
 **API health check:** [https://localbizz-connect-platform.onrender.com/health](https://localbizz-connect-platform.onrender.com/health)
 
-> The backend root URL (`/`) shows `Cannot GET /` ΓÇö that is normal. The API is meant to be used by the frontend, not opened as a website.
 
-**Database:** Hosted on [Aiven](https://aiven.io/) (MySQL, cloud). Local development can use MySQL on your machine with database name `simple_login` or `defaultdb` on Aiven.
+**Database:** 
+Hosted on [Aiven](https://aiven.io/) (MySQL, cloud). Local development can use MySQL on your machine with database name `simple_login` or `defaultdb` on Aiven.
 
-**Repository:** [https://github.com/mansi153-wq/LocalBizz-Connect-Platform](https://github.com/mansi153-wq/LocalBizz-Connect-Platform)
+
+**Repository:**
+[https://github.com/mansi153-wq/LocalBizz-Connect-Platform](https://github.com/mansi153-wq/LocalBizz-Connect-Platform)
 
 ---
 
@@ -43,7 +46,7 @@ LocalBiz Connect is a full-stack marketplace web application that connects custo
 - Order management (accept / reject / status updates)
 - Account settings
 
-### Admin module
+### 👨‍💼Admin module
 - Vendor management
 - Customer management
 - Product moderation
@@ -145,7 +148,7 @@ LocalBizz-Connect-Platform/
 ├── render.yaml                  # Render Blueprint
 ├── DEPLOY_RENDER.md             # Render deployment guide
 └── README.md
-
+```
 ---
 
 ##  📌 Prerequisites
@@ -178,12 +181,13 @@ LocalBizz-Connect-Platform/
 - Git
 - Vite
 
-⚙️ Installation & Setup Guide
+ 
+### ⚙️ Installation & Setup Guide
 
 This project can be run in two ways:
 
-Local MySQL Setup (Recommended for Development)
-Cloud MySQL Setup (Aiven Database)
+### 1)Local MySQL Setup (Recommended for Development)
+### 2)Cloud MySQL Setup (Aiven Database)
 
 
 ### 📥1. Clone the repository
@@ -191,40 +195,43 @@ Cloud MySQL Setup (Aiven Database)
 ```bash
 git clone https://github.com/mansi153-wq/LocalBizz-Connect-Platform.git
 cd LocalBizz-Connect-Platform
-
+```
 ------------------------------------
-📦 Install Dependencies
+
+### 📦 Install Dependencies
 Frontend
 cd frontend
 npm install
 Backend
 cd backend
 npm install
+
 -------------------------------------
-Option 1 — Run with Local MySQL
+
+### Option 1 — Run with Local MySQL
+
 Step 1: Create Database
 
-Create a MySQL database named:
-
+Create a MySQL database named: simple_login
 CREATE DATABASE simple_login;
+
+
 Step 2: Configure Database Credentials
 
 Open:
-
 backend/database.js
-
 Update your MySQL credentials:
 
 host: "localhost",
 user: "root",
 password: "your_password",
 database: "simple_login"
+
+
 Step 3: Configure Environment Variables
 
 Create:
-
 backend/.env
-
 Example:
 
 PORT=5000
@@ -234,7 +241,10 @@ DB_USER=root
 DB_PASSWORD=your_password
 DB_NAME=simple_login
 DB_SSL=false
+
+
 Step 4: Start the Application
+
 Terminal 1 — Frontend
 cd frontend
 npm run dev
@@ -242,6 +252,8 @@ npm run dev
 Frontend runs on:
 
 http://localhost:5173
+
+
 Terminal 2 — Vendor Backend
 cd backend
 node servers.js
@@ -249,6 +261,8 @@ node servers.js
 Runs on:
 
 http://localhost:5000
+
+
 Terminal 3 — Customer Authentication Server
 cd backend
 node server.js
@@ -261,6 +275,7 @@ http://localhost:3000
 
 
 ### Option B — Cloud MySQL (Aiven)
+
 Step 1: Create an Aiven MySQL Service
 
 Create a MySQL service in Aiven and wait until the status becomes Running.
@@ -277,6 +292,8 @@ mysql --user avnadmin -p \
 Import schema:
 
 source Backend/schema-aiven.sql
+
+
 Step 3: Configure Environment Variables
 
 Create:
@@ -472,6 +489,6 @@ GitHub: https://github.com/mansi153-wq
 
 ---
 
-# License
+
 
 This project is licensed under the MIT License. See the LICENSE file for details.
